@@ -1,18 +1,21 @@
 flowchart
-
+	DirectServiceConsent(An employee MUST get explicit consent from the consumer to open a Consumer Service Record.)
 	ILPlanExplanation(The Independent Living Plan is solely for the consumer's benefit. Both plans are functionally equivalent from our perspective, since the intermediate steps are not tracked by GroupWorks)
+	IROnly(Only the I&R will exist for this consumer, not a full Consumer Service Record. However, one can still be created at a later date.)
 	classDef yellow fill:#ffffc1
+	class DirectServiceConsent yellow
 	class ILPlanExplanation yellow
-	
+	class IROnly yellow
+
 	AltFormatAsk{"Do you need this information in an alternative format? (larger print, braille, etc.)"}
 	AppointmentEnd(The appointment ends)
-	AppointmentScheduled(An appointment is scheduled with the relevant employee)
+	AppointmentScheduled(An appointment is scheduled between the caller with the relevant employee)
 	AppointmentStart(The scheduled date arrives)
 	Call(Someone calls Options)
 	CallAnswered(Any employee answers the phone)
 	CallEnd(The employee takes a message and the caller is requested to call back later)
 	CallRedirected(The call is transferred to the most relevant employee)
-	CallRedirecting{The employee asks any follow up questions to direct the caller to the most relevant employee for the task}
+	CallRedirecting{The employee asks follow up questions to direct the caller to the most relevant employee for the situation}
 	ConsumerTalks(Consumer talks about themselves and what services they would like from Options while the employee notes relevant information)
 	DataEntry("The employee enters the information from the paper sheets (I&R and Consumer Information File) into GroupWorks")
 	DirectServiceAsk{Would you like to open a file?}
@@ -25,11 +28,13 @@ flowchart
 	DirectServiceGoalFillIn(The goals section of the file is completed based on the consumer's response)
 	DirectServiceILPlanAsk{Would you like to start an Independent Living Plan?}
 	DirectServiceImpact(Impact and Likehood are asked and recorded)
+	DirectServiceYes(A Consumer Service Record / Consumer Information File is opened.)
+	DirectServiceNo(A Consumer Service Record is never opened. Options will continue to serve the consumer solely with the I&R form.)
 	FileID("A physical drawer is accessed to determine the file ID. The format is \[Zip Code of the Consumer's Address\]-[The next available 3 digit integer]")
-	IRFillIn("Ideally, the caller is asked for all the information on the Information and Referral (I&R) form. Eligibility for Options' services may also be determined.")
+	IRFillIn("Ideally, the caller is asked for all the information on the 'Information and Referral' (I&R) form.")
 	NewsletterAsk{Would you like to opt-in to our newsletter?}
-	NewsletterNo(The address provided will solely be used as needed to assist the consumer in their goals)
 	NewsletterYes(The address provided will be used for a physical mail newsletter)
+	NewsletterNo(The address provided will solely be used as needed to assist the consumer in their goals)
 	OptionsFamiliarAsk{Are you familiar with Options?}
 	PacketBrochure("Options' Brochure, which includes it's 9 core services, is explained to the consumer")
 	PacketCAP("The 'Client Assistance Project' brochure is explained")
@@ -38,13 +43,20 @@ flowchart
 	PacketOlmstead("'Olmstead Fact Sheet' is explained")
 	PacketPhilosophy("'Options Philosophy and Services' is explained to the consumer")
 	PacketSurvey("The consumer satisfaction survey is explained")
+	RequestLength{Is the caller requesting a short-term 'one-off' task or a long-term goal?}
+	ShortTerm("The request can be fulfilled quickly or immediately.")
+	LongTerm("The consumer will be encouraged to start a Consumer Service Record with Options")
 
 	Call --> CallAnswered 
 	CallAnswered --> CallRedirecting
-	CallRedirecting --> |Employee is present| CallRedirected
-	CallRedirecting ---> |Employee is not present| CallEnd
+	CallRedirecting --> |Relevant employee is present| CallRedirected
+	CallRedirecting ---> |Relevant employee is not present| CallEnd
 	CallRedirected --> IRFillIn
-	IRFillIn --> AppointmentScheduled	
+	IRFillIn --> RequestLength
+	RequestLength --> |Short Term| ShortTerm
+	ShortTerm --> IROnly
+	RequestLength --> |Long Term| LongTerm
+	LongTerm --> AppointmentScheduled
 	AppointmentScheduled --> AppointmentStart
 	AppointmentStart --> ConsumerTalks
 	ConsumerTalks --> OptionsFamiliarAsk
@@ -66,10 +78,11 @@ flowchart
 	NewsletterYes --> DirectServiceAsk
 	NewsletterNo --> DirectServiceAsk
 
-	DirectServiceAsk --> |Yes| DirectServiceYes(A Consumer Service Record / Consumer Information File is opened.)
-	DirectServiceAsk --> |No| DirectServiceNo(A Consumer Service Record is never opened. Options will continue to serve the consumer solely with the I&R form.)
+	DirectServiceAsk --> |Yes| DirectServiceConsent
+	DirectServiceConsent --> DirectServiceYes
+	DirectServiceAsk --> |No| DirectServiceNo
 	DirectServiceNo --> AppointmentEnd
-	DirectServiceYes --> DirectServiceContact
+	DirectServiceYes  --> DirectServiceContact
 	DirectServiceContact --> DirectServiceEmailAsk
 	DirectServiceEmailAsk --> |Yes| YesEmail(Email is added to the file)
 	DirectServiceEmailAsk --> |No| NoEmail(Email is not added to the file)
