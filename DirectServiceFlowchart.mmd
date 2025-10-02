@@ -1,0 +1,97 @@
+flowchart
+
+	ILPlanExplanation(The Independent Living Plan is solely for the consumer's benefit. Both plans are functionally equivalent from our perspective, since the intermediate steps are not tracked by GroupWorks)
+	classDef yellow fill:#ffffc1
+	class ILPlanExplanation yellow
+	
+	AltFormatAsk{"Do you need this information in an alternative format? (larger print, braille, etc.)"}
+	AppointmentEnd(The appointment ends)
+	AppointmentScheduled(An appointment is scheduled with the relevant employee)
+	AppointmentStart(The scheduled date arrives)
+	Call(Someone calls Options)
+	CallAnswered(Any employee answers the phone)
+	CallEnd(The employee takes a message and the caller is requested to call back later)
+	CallRedirected(The call is transferred to the most relevant employee)
+	CallRedirecting{The employee asks any follow up questions to direct the caller to the most relevant employee for the task}
+	ConsumerTalks(Consumer talks about themselves and what services they would like from Options while the employee notes relevant information)
+	DataEntry("The employee enters the information from the paper sheets (I&R and Consumer Information File) into GroupWorks")
+	DirectServiceAsk{Would you like to open a file?}
+	DirectServiceContact("The consumer's contact information (name, address, phone) and demographic information is officially requested")
+	DirectServiceDisability(What do you self report as your disability?)
+	DirectServiceEligibility{Eligibility for Options services is officially determined}
+	DirectServiceEmailAsk{Do you have an email and use it regularly?}
+	DirectServiceGivenCopy(The consumer is given a copy of their paper Consumer Service Record)
+	DirectServiceGoalAsk{"What are your goals? (ex. moving, a new wheelchair, etc.)"}
+	DirectServiceGoalFillIn(The goals section of the file is completed based on the consumer's response)
+	DirectServiceILPlanAsk{Would you like to start an Independent Living Plan?}
+	DirectServiceImpact(Impact and Likehood are asked and recorded)
+	FileID("A physical drawer is accessed to determine the file ID. The format is \[Zip Code of the Consumer's Address\]-[The next available 3 digit integer]")
+	IRFillIn("Ideally, the caller is asked for all the information on the Information and Referral (I&R) form. Eligibility for Options' services may also be determined.")
+	NewsletterAsk{Would you like to opt-in to our newsletter?}
+	NewsletterNo(The address provided will solely be used as needed to assist the consumer in their goals)
+	NewsletterYes(The address provided will be used for a physical mail newsletter)
+	OptionsFamiliarAsk{Are you familiar with Options?}
+	PacketBrochure("Options' Brochure, which includes it's 9 core services, is explained to the consumer")
+	PacketCAP("The 'Client Assistance Project' brochure is explained")
+	PacketGiven(Consumer is given an informational packet)
+	PacketGrievence("The grievence procedure (contact the executive director) is explained")
+	PacketOlmstead("'Olmstead Fact Sheet' is explained")
+	PacketPhilosophy("'Options Philosophy and Services' is explained to the consumer")
+	PacketSurvey("The consumer satisfaction survey is explained")
+
+	Call --> CallAnswered 
+	CallAnswered --> CallRedirecting
+	CallRedirecting --> |Employee is present| CallRedirected
+	CallRedirecting ---> |Employee is not present| CallEnd
+	CallRedirected --> IRFillIn
+	IRFillIn --> AppointmentScheduled	
+	AppointmentScheduled --> AppointmentStart
+	AppointmentStart --> ConsumerTalks
+	ConsumerTalks --> OptionsFamiliarAsk
+	OptionsFamiliarAsk --> |Yes| NewsletterAsk
+	OptionsFamiliarAsk --> |No| PacketGiven
+	PacketGiven --> AltFormatAsk
+	AltFormatAsk --> |Yes| AltFormat(The consumer is given an equivalent of the information packet in an alternative format)
+	AltFormat --> PacketPhilosophy
+	AltFormatAsk --> |No| PacketPhilosophy
+	PacketPhilosophy --> PacketBrochure
+	PacketBrochure --> PacketOlmstead
+	PacketOlmstead --> PacketGrievence
+	PacketGrievence --> PacketCAP
+	PacketCAP --> PacketSurvey
+	PacketSurvey --> NewsletterAsk
+
+	NewsletterAsk --> |Yes| NewsletterYes
+	NewsletterAsk --> |No| NewsletterNo
+	NewsletterYes --> DirectServiceAsk
+	NewsletterNo --> DirectServiceAsk
+
+	DirectServiceAsk --> |Yes| DirectServiceYes(A Consumer Service Record / Consumer Information File is opened.)
+	DirectServiceAsk --> |No| DirectServiceNo(A Consumer Service Record is never opened. Options will continue to serve the consumer solely with the I&R form.)
+	DirectServiceNo --> AppointmentEnd
+	DirectServiceYes --> DirectServiceContact
+	DirectServiceContact --> DirectServiceEmailAsk
+	DirectServiceEmailAsk --> |Yes| YesEmail(Email is added to the file)
+	DirectServiceEmailAsk --> |No| NoEmail(Email is not added to the file)
+	YesEmail --> DirectServiceDisability
+	NoEmail --> DirectServiceDisability
+	DirectServiceDisability --> DirectServiceEligibility
+	DirectServiceEligibility --> |Eligibile| EligibileYes(The consumer candidate is officially a consumer)
+	DirectServiceEligibility --> |Ineligibile| EligibileNo(The consumer candidate is not a consumer and will not be served by Options)
+	EligibileYes --> DirectServiceImpact
+	EligibileNo --> AppointmentEnd
+	DirectServiceImpact --> DirectServiceILPlanAsk
+	DirectServiceILPlanAsk --> |Yes| ILPlanYes(An Independent Living Plan is started, which details the consumers' goals as well as the steps to achieve those goals)
+	DirectServiceILPlanAsk --> |No| ILPlanNo(A waiver plan is started, which simply includes the consumers' goals)
+	ILPlanYes --> ILPlanExplanation
+	ILPlanNo --> ILPlanExplanation
+	ILPlanExplanation --> DirectServiceGoalAsk
+	DirectServiceGoalAsk --> DirectServiceGoalFillIn
+	DirectServiceGoalFillIn --> DirectServiceGivenCopy
+	DirectServiceGivenCopy --> AppointmentEnd
+	AppointmentEnd --> FileID
+
+	FileID --> DataEntry
+	DataEntry --> Query(The executive director queries out the data in GroupWorks for the following purposes)
+	Query --> |Yearly| PPR("To fill out the federal 704 / PPR Report")
+	Query --> |Monthly| MasterLists("A master list of employees and the current consumers they serve to ensure employees are doing work and no consumer 'slips through the cracks'")
