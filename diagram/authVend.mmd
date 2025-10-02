@@ -1,0 +1,50 @@
+sequenceDiagram
+    participant f as Frontend
+    participant b as Backend
+    participant d as Directory
+
+    critical Backend Startup
+
+        b ->> d: LDAP BindRequest
+        note over b,d: Payload contains service account<br>credentials specified in server<br>environment
+        d ->> b: LDAP BindResponse success
+        activate b
+
+    end
+
+    f ->> b: HTTP POST #47;api#47;v1#47;auth
+    note over f,b: Payload:<br/>{ username: "string", password: "string" }
+
+    b ->> d: LDAP BindRequest
+    note over b,d: Payload contains user's credentials.<br>This operation opens a second connection<br>if successful.
+
+    alt User Credentials Valid
+
+        d ->> b: LDAP BindResponse resultCode success
+        activate b
+        b ->> d: LDAP UnbindRequest
+        deactivate b
+        note over b,d: This second connection is immediately terminated<br>as it's only purpose is to validate credentials.
+        b ->> d: LDAP SearchRequest
+        note over b,d: This request gets the full details of the user from Active<br>Directory, including group memberships.
+        d ->> b: LDAP SearchResultEntry
+        d ->> b: LDAP SearchResultDone
+        note right of b: Server builds JWT containing username,<br>first name, last name, and groups.<br>JWT is signed with server's private key.
+        b ->> f: HTTP 200 OK
+        note over b,f: Response Header:<br>Set-Cookie: authToken=eyJhbGciOiJIUzI1...
+
+    else User Credentials Invalid
+
+        d ->> b: LDAP BindResponse resultCode invalidCredentials
+        note right of b: LDAP Bind failed, so the user's entered<br>bad credentials. Return indicating such.
+        b ->> f: HTTP 422 Invalid Credentials
+
+    end
+
+    critical Backend Shutdown
+
+        b ->> d: LDAP UnbindRequest
+    
+    deactivate b
+    
+    end
