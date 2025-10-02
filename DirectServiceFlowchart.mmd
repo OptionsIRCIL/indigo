@@ -89,10 +89,10 @@ flowchart
 	YesEmail --> DirectServiceDisability
 	NoEmail --> DirectServiceDisability
 	DirectServiceDisability --> DirectServiceEligibility
-	DirectServiceEligibility --> |Eligibile| EligibileYes(The consumer candidate is officially a consumer)
-	DirectServiceEligibility --> |Ineligibile| EligibileNo(The consumer candidate is not a consumer and will not be served by Options)
-	EligibileYes --> DirectServiceImpact
-	EligibileNo --> AppointmentEnd
+	DirectServiceEligibility --> |Eligible| EligibleYes(The consumer candidate is officially a consumer)
+	DirectServiceEligibility --> |Ineligible| EligibleNo(The consumer candidate is not a consumer and will not be served by Options)
+	EligibleYes --> DirectServiceImpact
+	EligibleNo --> AppointmentEnd
 	DirectServiceImpact --> DirectServiceILPlanAsk
 	DirectServiceILPlanAsk --> |Yes| ILPlanYes(An Independent Living Plan is started, which details the consumers' goals as well as the steps to achieve those goals)
 	DirectServiceILPlanAsk --> |No| ILPlanNo(A waiver plan is started, which simply includes the consumers' goals)
