@@ -6,6 +6,8 @@ flowchart TD
     C -->|Yes| D{authToken has valid signature?}
     D -->|No| r403
     D -->|Yes| E[User groups are read from JWT claims]
-    E --> F{User has permission to access route?}
+    E --> F{JWT 'iat' parameter greater than last password change time?}
     F -->|No| r403
-    F -->|Yes| G[Request continues]
+    F -->|Yes| G{User has permission to access route?}
+    G -->|No| r403
+    G -->|Yes| H[Request continues]
