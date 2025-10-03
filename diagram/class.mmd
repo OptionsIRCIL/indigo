@@ -10,7 +10,6 @@ classDiagram
         bool active
         bool deceased
 
-        search() string
     }
 
     class Place {
@@ -21,14 +20,12 @@ classDiagram
         string zip
         bool mailingConsentGranted
 
-        search() string
     }
 
     class Organization {
         string name
         Time updatedAt
 
-        search() string
     }
 
     class AddressPhone {
@@ -73,9 +70,6 @@ classDiagram
         string grant 
         string serviceType
         int hours
-
-        add()
-        edit()
     }
 
     class DisabilityInfo {
@@ -85,8 +79,8 @@ classDiagram
         string gender
     }
 
-    class CustomerService {
-        int customerServiceFileNumber
+    class ConsumerService {
+        int consumerServiceFileNumber
         string status
         dateTime activationDate
         dateTime closureDate
@@ -102,8 +96,6 @@ classDiagram
         string type 
         int hours
 
-        add()
-        edit()
     }
 
     class Goals {
@@ -118,8 +110,6 @@ classDiagram
         string outcomeDescription
         dateTime closureDate
 
-        add()
-        edit()
     }
 
     class CommunityServiceEvent {
@@ -149,7 +139,7 @@ classDiagram
     Person "1" --> "0..*" RecordDef : has
     Person "1" --> "0..1" DisabilityInfo : has
     Person "1" --> "0..*" InformationAndReferral : has
-    Person "1" --> "0..*" CustomerService : has
+    Person "1" --> "0..*" ConsumerService : has
     Person "1" --> "0..*" Goals : sets
-    CustomerService "1" --> "1..*" ServicesOffered
+    ConsumerService "1" --> "1..*" ServicesOffered
     AddressPhone "1" --> "1..*" ServicesOffered : has
