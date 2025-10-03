@@ -55,7 +55,7 @@ classDiagram
     class Alias {
         string firstName
         string lastName
-        bool CC
+        bool contactInEmail
     }
 
     class RecordDef {
@@ -63,7 +63,7 @@ classDiagram
         string defaultGrant
     }
 
-    class InR {
+    class InformationAndReferral {
         dateTime initialDate
         string category
         string regarding
@@ -86,7 +86,7 @@ classDiagram
     }
 
     class CustomerService {
-        int csrFileNum
+        int customerServiceFileNumber
         string status
         dateTime activationDate
         dateTime closureDate
@@ -112,7 +112,7 @@ classDiagram
         string futureReference
         string grant
         string goalStatus
-        dateTime estCompletionDate
+        dateTime estimatedCompletionDate
         string goalDescription
         string outcome
         string outcomeDescription
@@ -143,11 +143,13 @@ classDiagram
     }
 
     %% Relationships
-    AddressPhone <|-- Place
-    Person --> AddressPhone
-    Person --> Alias
-    Person --> RecordDef
-    Person --> DisabilityInfo
-    Person --> InR
-    Person --> CustomerService
-    Person --> Goals
+    AddressPhone <|-- Place : 1 "is a" 1
+    Person "1" --> "0..*" AddressPhone : has
+    Person "1" --> "0..*" Alias : can have
+    Person "1" --> "0..*" RecordDef : has
+    Person "1" --> "0..1" DisabilityInfo : has
+    Person "1" --> "0..*" InformationAndReferral : has
+    Person "1" --> "0..*" CustomerService : has
+    Person "1" --> "0..*" Goals : sets
+    CustomerService "1" --> "1..*" ServicesOffered
+    AddressPhone "1" --> "1..*" ServicesOffered : has
