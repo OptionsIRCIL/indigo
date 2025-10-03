@@ -1,26 +1,153 @@
 classDiagram
     class Person {
-        firstName: string
-        lastName: string
-        salutation: string
-        gender: string
-        birthday: Time
-        email: string
-        phone: string
-        active: bool
-        deceased: bool
+        string firstName
+        string lastName
+        string salutation
+        string gender
+        Time birthday
+        string email
+        string phone
+        bool active
+        bool deceased
+
+        search() string
     }
 
     class Place {
-        addressLine1: string
-        addressLine2: string
-        city: string
-        state: string
-        zip: string
-        mailingConsentGranted: bool
+        string addressLine1
+        string addressLine2
+        string city
+        string state
+        string zip
+        bool mailingConsentGranted
+
+        search() string
     }
 
     class Organization {
-        name: string
-        updatedAt: Time
+        string name
+        Time updatedAt
+
+        search() string
     }
+
+    class AddressPhone {
+        string addressLine1
+        string addressLine2
+        string city
+        string state
+        string zip
+        string county
+        string serviceArea
+        string routePresort
+        bool validAddress
+        bool deceased
+        array serviceMemberships
+        string otherAddress
+        string email
+        string internet
+        string notes
+        string phone
+        string phoneExtension
+        string phoneType
+    }
+
+    class Alias {
+        string firstName
+        string lastName
+        bool CC
+    }
+
+    class RecordDef {
+        string recordType
+        string defaultGrant
+    }
+
+    class InR {
+        dateTime initialDate
+        string category
+        string regarding
+        string outcome
+        string date
+        string employee
+        string grant 
+        string serviceType
+        int hours
+
+        add()
+        edit()
+    }
+
+    class DisabilityInfo {
+        array disabilities
+        string disabilityClassification
+        string raceEthnicity
+        string gender
+    }
+
+    class CustomerService {
+        int csrFileNum
+        string status
+        dateTime activationDate
+        dateTime closureDate
+        dateTime dateOfBirth
+        string independentLivingActivity
+        bool deceased
+        string intake
+        string exit 
+        dateTime ILPActionDate
+        dateTime date
+        string primaryEmployee
+        string grant
+        string type 
+        int hours
+
+        add()
+        edit()
+    }
+
+    class Goals {
+        dateTime initialDate
+        string type
+        string futureReference
+        string grant
+        string goalStatus
+        dateTime estCompletionDate
+        string goalDescription
+        string outcome
+        string outcomeDescription
+        dateTime closureDate
+
+        add()
+        edit()
+    }
+
+    class CommunityServiceEvent {
+        dateTime initialDate
+        string category
+        string futureReference
+        string serviceDescription
+        string outcome
+        int publications
+        int personsWithDisabilities
+        int generalPublic
+    }
+
+    class ServicesOffered {
+        string serviceDescription
+        array eligibilityRequirments
+        array intakeProcedures
+        array feesCharged
+        string hoursOfOperation
+        string other
+    }
+
+    %% Relationships
+    AddressPhone <|-- Place
+    Person --> AddressPhone
+    Person --> Alias
+    Person --> RecordDef
+    Person --> DisabilityInfo
+    Person --> InR
+    Person --> CustomerService
+    Person --> Goals

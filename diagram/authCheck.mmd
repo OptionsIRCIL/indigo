@@ -1,0 +1,11 @@
+flowchart TD
+    A[Client sends HTTP request to restricted endpoint] --> B{Client has authToken cookie?}
+    B -->|No| r401[401 Unauthorized]
+    B -->|Yes| C{authToken is a valid JWT?}
+    C -->|No| r403[403 Forbidden]
+    C -->|Yes| D{authToken has valid signature?}
+    D -->|No| r403
+    D -->|Yes| E[User groups are read from JWT claims]
+    E --> F{User has permission to access route?}
+    F -->|No| r403
+    F -->|Yes| G[Request continues]
