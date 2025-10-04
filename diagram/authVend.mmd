@@ -14,6 +14,7 @@ sequenceDiagram
 
     f ->> b: HTTP POST #47;api#47;v1#47;auth
     note over f,b: Payload:<br/>{ username: "string", password: "string" }
+    note over f,b: Endpoint requires HTTPS connection
 
     b ->> d: LDAP BindRequest
     note over b,d: Payload contains user's credentials.<br>This operation opens a second connection<br>if successful.
