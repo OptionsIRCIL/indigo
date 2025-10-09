@@ -23,9 +23,12 @@ TODO: Write specs.
 
 ## System Diagrams
 
-### End-User Workflow
+### End-User Workflows
 
-[directServiceFlowchart.mmd](diagram/directServiceFlowchart.mmd)
+[directServiceWorkflow.mmd](diagram/directServiceWorkflow.mmd)
+details an example workflow for how an end user may provide direct service to an individual consumer, illustrated in flowchart format.
+
+[uiWorkflow.mmd](diagram/uiWorkflow.mmd)
 details the process by which end users typically interact with the
 system, illustrated in flowchart format.
 

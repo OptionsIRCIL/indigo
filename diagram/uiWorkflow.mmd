@@ -1,0 +1,49 @@
+flowchart
+	OpenProgram("User opens GroupWorks")
+	LoginPage("User is prompted with a login page")
+	LandingPage{"The user is on the main dashboard"}
+	
+	RecordTypeChoice{"User selects either 'Business' or 'Individual'"}
+	SearchBusiness("User searches in the search bar, returning only businesses")
+	SearchIndividual("User searches in the search bar, returning only individuals")
+	DoesRecordExist{"Does the expected record exist in the results list?"}
+	NewRecord("A new record is created by clicking the 'New' button")
+	SelectRecord("The existing record is selected and opened")
+	OpenRecord("A new record tab is opened")
+	
+	DataEntry("The user enters the data from their physical paperwork into GroupWorks")
+	InfoRecordRefactor("There is enough to refactor here (lack of separation of concerns) that going into greater detail on this flowchart would be difficult and probably unhelpful.")
+	InfoFluidOrder("Broadly speaking, all subtabs should be able to be completed in any order, although a user is most likely to go from left to right. The structure should be somewhat fluid.")
+	
+	CloseRecordTab("The user is done entering in data and can close the record tab by right clicking it and selecting 'Close Tab'")
+	InfoCloseRecord("Not to be confused with 'closing a record' which is when all the goals in a record are complete and it is no longer considered active.")
+	InfoAutoSave("Currently, information is automatically saved as soon as it is entered. This can be substituted for a more explicit 'Apply/Undo' user experience.")
+
+	OpenProgram --> LoginPage
+	LoginPage --> |Login Successful| LandingPage
+	LoginPage --> |Login Unsuccessful| LoginPage
+	LandingPage --> |New Record| NewRecord
+	LandingPage --> |Existing Record| RecordTypeChoice
+	RecordTypeChoice --> |Business| SearchBusiness
+	RecordTypeChoice --> |Individual| SearchIndividual
+	SearchBusiness --> DoesRecordExist
+	SearchIndividual --> DoesRecordExist
+	DoesRecordExist --> |No| NewRecord
+	DoesRecordExist --> |Yes| SelectRecord
+	SelectRecord --> OpenRecord
+	NewRecord --> OpenRecord
+	OpenRecord --> DataEntry
+	
+	DataEntry --> InfoRecordRefactor
+	InfoRecordRefactor --> InfoFluidOrder
+	InfoFluidOrder --> CloseRecordTab
+	CloseRecordTab --> InfoCloseRecord
+	CloseRecordTab --> LandingPage
+	InfoCloseRecord --> InfoAutoSave
+	InfoAutoSave --> END
+
+	classDef yellow fill:#ffffc1
+	class InfoRecordRefactor yellow
+	class InfoFluidOrder yellow
+	class InfoCloseRecord yellow
+	class InfoAutoSave yellow
