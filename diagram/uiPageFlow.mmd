@@ -1,11 +1,6 @@
 flowchart TD
-    A[Login Page] --> B[Main Dashboard Page]
-    B --> A
-    B --> C[Business Search Page]
-    B --> D[Individual Search Page]
-    C --> B
-    D --> B
-    C --> E[New Business Record Page -separate tab]
-    E --> C
-    D --> F[New Individual Record Page -separate tab]
-    F --> D
+    A[Login Page] <--> B[Main Dashboard Page]
+    B <--> C[Business Search Page]
+    B <--> D[Individual Search Page]
+    C <--> E[New Business Record Page -separate tab]
+    D <--> F[New Individual Record Page -separate tab]
