@@ -1,6 +1,29 @@
 flowchart TD
-    A[Login Page] <--> B[Main Dashboard Page]
-    B <--> C[Business Search Page]
-    B <--> D[Individual Search Page]
-    C <--> E[New Business Record Page -separate tab]
-    D <--> F[New Individual Record Page -separate tab]
+	Contact["Subtab: Address/Phone"]
+	Alias["Subtab: Alias"]
+	RecordDef["Subtab: Record Defintion"]
+	DisInfo["Subtab: Disability Information"]
+	IR["Subtab: Information and Referral (I&R)"]
+	Consumer["Subtab: Consumer Service Record"]
+	Goals["Subtab: Goals"]
+	CEO["Subtab: Community, Education, and Outreach (CEO)"]
+	
+    A["Login Page"] <--> B["Main Dashboard Page"]
+    B <--> C["Business Search Page"]
+    B <--> D["Individual Search Page"]
+    C <--> E["New Business Record Page (Separate Tab)"]
+    D <--> F["New Individual Record Page (Separate Tab)"]
+
+    E --- CEO
+    E --- Contact
+    E --- Alias
+    E --- RecordDef
+    F --- Contact
+    F --- Alias
+    F --- RecordDef
+    
+
+ 	F --- DisInfo
+	F --- IR
+	F --- Consumer
+	F --- Goals
