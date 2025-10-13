@@ -7,6 +7,7 @@ flowchart TD
 	CEO["Subtab: Community, Education, and Outreach (CEO)"]
 	Memberships["Subtab: Memberships"]
 	Attachments["Subtab: Notes and Attachments"]
+	Newsletter["Subtab: Newsletter"]
 	
     A["Login Page"] <--> B["Main Dashboard Page"]
     B <--> C["Business Search Page"]
@@ -17,9 +18,11 @@ flowchart TD
     Business --- CEO
     Business --- Contact
 	Business --- Attachments
-	
+	Business --- Newsletter
+
     Individual --- Contact
 	Individual --- Attachments
+	Individual --- Newsletter
  	Individual --- Memberships
  	Individual --- Eligibility
 	Individual --- IR
