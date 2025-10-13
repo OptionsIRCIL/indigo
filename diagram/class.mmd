@@ -1,5 +1,5 @@
 classDiagram
-    class Person {
+    class Individual {
         string firstName
         string lastName
         string salutation
@@ -9,59 +9,31 @@ classDiagram
         string phone
         bool active
         bool deceased
+        string primaryEmployee
+        Place serviceArea
+    }
 
+    class Employee {
+    	array permissions
+        string defaultGrant
     }
 
     class Place {
-        string addressLine1
-        string addressLine2
+    	string address
         string city
         string state
         string zip
-        bool mailingConsentGranted
-
     }
 
     class Organization {
         string name
         Time updatedAt
-
-    }
-
-    class AddressPhone {
-        string addressLine1
-        string addressLine2
-        string city
-        string state
-        string zip
-        string county
-        string serviceArea
-        string routePresort
-        bool validAddress
-        bool deceased
-        array serviceMemberships
-        string otherAddress
-        string email
-        string internet
-        string notes
-        string phone
-        string phoneExtension
-        string phoneType
-    }
-
-    class Alias {
-        string firstName
-        string lastName
-        bool contactInEmail
-    }
-
-    class RecordDef {
-        string recordType
-        string defaultGrant
     }
 
     class InformationAndReferral {
-        dateTime initialDate
+        date initialDate
+    	string preferredContactMethod
+    	string email
         string category
         string regarding
         string outcome
@@ -70,50 +42,60 @@ classDiagram
         string grant 
         string serviceType
         int hours
+		bool addressRequired
+		array addresses
     }
 
-    class DisabilityInfo {
-        array disabilities
-        string disabilityClassification
+    class Memberships {
+        array serviceMemberships
+        array businessMemberships
+        bool mailingConsentGranted
+        Place mailingAddress
         string raceEthnicity
         string gender
+    }
+
+    class Eligibility {
+        array disabilities
+        bool hasDisability
+        string disabilityClassification
     }
 
     class ConsumerService {
         int consumerServiceFileNumber
         string status
-        dateTime activationDate
-        dateTime closureDate
-        dateTime dateOfBirth
+        date activationDate
+        date closureDate
+        date dateOfBirth
         string independentLivingActivity
         bool deceased
         string intake
         string exit 
-        dateTime ILPActionDate
-        dateTime date
+        date ILPActionDate
+        date date
         string primaryEmployee
         string grant
         string type 
         int hours
-
     }
 
     class Goals {
-        dateTime initialDate
+        date initialDate
         string type
         string futureReference
         string grant
         string goalStatus
-        dateTime estimatedCompletionDate
+        date estimatedCompletionDate
         string goalDescription
         string outcome
         string outcomeDescription
-        dateTime closureDate
-
+        date closureDate
+		bool addressRequired
+		Place[] addresses
     }
 
     class CommunityServiceEvent {
-        dateTime initialDate
+        date initialDate
         string category
         string futureReference
         string serviceDescription
@@ -121,25 +103,30 @@ classDiagram
         int publications
         int personsWithDisabilities
         int generalPublic
+		bool addressRequired
+		Place[] addresses
     }
 
-    class ServicesOffered {
-        string serviceDescription
-        array eligibilityRequirments
-        array intakeProcedures
-        array feesCharged
-        string hoursOfOperation
-        string other
+    class Attachments {
+    	string notes
+    	array attachments
     }
 
     %% Relationships
-    AddressPhone <|-- Place : 1 "is a" 1
-    Person "1" --> "0..*" AddressPhone : has
-    Person "1" --> "0..*" Alias : can have
-    Person "1" --> "0..*" RecordDef : has
-    Person "1" --> "0..1" DisabilityInfo : has
-    Person "1" --> "0..*" InformationAndReferral : has
-    Person "1" --> "0..*" ConsumerService : has
-    Person "1" --> "0..*" Goals : sets
-    ConsumerService "1" --> "1..*" ServicesOffered
-    AddressPhone "1" --> "1..*" ServicesOffered : has
+    Individual "1" --> "0..1" Employee : is
+    Individual "1" --> "1" Memberships : has
+    Individual "1" --> "0..*" InformationAndReferral : has
+    Individual "1" --> "1" Eligibility : has
+    Individual "1" --> "0..*" ConsumerService : has
+	InformationAndReferral "1" --> "1" Employee : has
+    ConsumerService "1" --> "1" Employee : has
+    ConsumerService "1" --> "0..*" Goals : sets
+    Memberships "1" --> "0..1" Organization : has
+    Organization "1" --> "0..1" CommunityServiceEvent: has
+    InformationAndReferral "1" --> "0..1" Place : has
+    Individual "1" --> "1" Place : has
+    CommunityServiceEvent "1" --> "0..1" Place : has
+    Goals "1" --> "0..1" Place : has
+    Memberships "1" --> "0..1" Place : has
+    Individual "1" --> "1" Attachments : has
+    Organization "1" --> "1" Attachments : has
