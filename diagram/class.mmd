@@ -27,13 +27,12 @@ classDiagram
 
     class Organization {
         string name
+        Place[] address
         Time updatedAt
     }
 
     class InformationAndReferral {
         date initialDate
-    	string preferredContactMethod
-    	string email
         string category
         string regarding
         string outcome
@@ -44,6 +43,13 @@ classDiagram
         int hours
 		bool addressRequired
 		array addresses
+    }
+    
+    class Contact {
+		string preferredContactMethod
+		array email
+		array phoneNumber
+		array website
     }
 
     class Memberships {
@@ -112,21 +118,24 @@ classDiagram
     	array attachments
     }
 
-    %% Relationships
-    Individual "1" --> "0..1" Employee : is
-    Individual "1" --> "1" Memberships : has
-    Individual "1" --> "0..*" InformationAndReferral : has
-    Individual "1" --> "1" Eligibility : has
-    Individual "1" --> "0..*" ConsumerService : has
+	%% Relationships
+	Individual "1" --> "0..1" Employee : is
+	Individual "1" --> "1" Memberships : has
+	Individual "1" --> "0..*" InformationAndReferral : has
+	Individual "1" --> "1" Eligibility : has
+	Individual "1" --> "0..*" ConsumerService : has
 	InformationAndReferral "1" --> "1" Employee : has
-    ConsumerService "1" --> "1" Employee : has
-    ConsumerService "1" --> "0..*" Goals : sets
-    Memberships "1" --> "0..1" Organization : has
-    Organization "1" --> "0..1" CommunityServiceEvent: has
-    InformationAndReferral "1" --> "0..1" Place : has
-    Individual "1" --> "1" Place : has
-    CommunityServiceEvent "1" --> "0..1" Place : has
-    Goals "1" --> "0..1" Place : has
-    Memberships "1" --> "0..1" Place : has
-    Individual "1" --> "1" Attachments : has
-    Organization "1" --> "1" Attachments : has
+	ConsumerService "1" --> "1" Employee : has
+	ConsumerService "1" --> "0..*" Goals : sets
+	Memberships "1" --> "0..1" Organization : has
+	Organization "1" --> "0..1" CommunityServiceEvent: has
+	InformationAndReferral "1" --> "0..1" Place : has
+	Individual "1" --> "1" Place : has
+	CommunityServiceEvent "1" --> "0..*" Place : has
+	Goals "1" --> "0..*" Place : has
+	Memberships "1" --> "0..*" Place : has
+	Organization "1" --> "0..*" Place : has
+	Individual "1" --> "1" Attachments : has
+	Organization "1" --> "1" Attachments : has
+	Individual "1" --> "1" Contact : has
+	Organization "1" --> "1" Contact : has
