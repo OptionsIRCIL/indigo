@@ -1,105 +1,172 @@
 classDiagram
-    class Individual {
+    class Employee {
+        UUIDv4 id
+        string username
+        string firstName
+        string lastName
+        bool active
+    }
+    note for Employee "unique(username)"
+    note for Employee "Usernames are assumed to be mutable, therefore a static ID is also set"
+    note for Employee "Data populated from AD upon successful auth"
+    note for Employee "TODO: populate id from some AD attribute?"
+
+
+    Consumer "n" --> "1" Employee
+    Consumer "n" -- "m" Disability: *Associative Table
+    Consumer .. Place
+    class Consumer {
+        UUIDv4 id
         string firstName
         string lastName
         string salutation
-        string gender
-        Time birthday
+        DateTime birthday
         string email
         string phone
         bool active
         bool deceased
-        string primaryEmployee
+        ?Employee primaryContact
         Place serviceArea
+        ?Place mailingAddress
+
     }
 
-    class Employee {
-    	array permissions
-        string defaultGrant
+    Race "n" -- "m" Consumer: *Associative Table
+    class Race {
+        string name
     }
+    note for Race "id(name)"
+    note for Race "Does this need an 'antiquated' flag or something?"
+
+    Gender "n" -- "m" Consumer: *Associative Table
+    class Gender {
+        UUIDv4 id
+        string name
+        string pronouns
+    }
+
+    Disability "n" --> "1" DisabilityClassification
+    class Disability {
+        string name
+        DisabilityClassification classification
+    }
+    note for Disability "id(name)"
+    note for Disability "Do names need to be mutable? If so, this needs a separate UUID."
+
+    class DisabilityClassification {
+        string name
+    }
+    note for DisabilityClassification "id(name)"
 
     class Place {
-    	string address
+        <<embeddable>>
+        string address
         string city
         string state
         string zip
     }
 
+    Organization .. Place
     class Organization {
+        UUIDv4 id
         string name
         Place[] address
         Time updatedAt
     }
+    note for Organization "Why is address an array? Can this be a single value?"
 
+    InformationAndReferral "n" --> "1" Grant
+    InformationAndReferral "1" --> "1" Consumer
+    InformationAndReferral "n" --> "1" Employee
+    InformationAndReferral .. Place
     class InformationAndReferral {
         date initialDate
         string category
         string regarding
         string outcome
         string date
-        string employee
-        string grant 
+        Employee primaryContact
+        Grant grant
         string serviceType
         int hours
-		bool addressRequired
-		array addresses
+        bool addressRequired
+        array addresses
     }
-    
-    class Contact {
-		string preferredContactMethod
-		array email
-		array phoneNumber
-		array website
-    }
+    note for InformationAndReferral "This is still unclear to me. If this form is done for each logged consumer, should this be merged into that entity?"
+    note for InformationAndReferral "Can multiple employees work on this? Do we need more granular time tracking?"
+    note for InformationAndReferral "serviceType, category, and grant should all be their own entities imo."
+    note for InformationAndReferral "No arrays, and if we *do* need them, use generics"
 
-    class Memberships {
-        array serviceMemberships
-        array businessMemberships
-        bool mailingConsentGranted
-        Place mailingAddress
-        string raceEthnicity
-        string gender
-    }
-
-    class Eligibility {
-        array disabilities
-        bool hasDisability
-        string disabilityClassification
-    }
-
-    class ConsumerService {
+    ServiceRequest "n" --> "1" Grant
+    ServiceRequest "n" --> "1" Consumer
+    class ServiceRequest {
         int consumerServiceFileNumber
         string status
-        date activationDate
-        date closureDate
-        date dateOfBirth
+        DateTime createdAt
+        date activatesAt
+        date closesAt
         string independentLivingActivity
-        bool deceased
         string intake
-        string exit 
+        string exit
         date ILPActionDate
         date date
         string primaryEmployee
         string grant
-        string type 
-        int hours
+        string type
+    }
+    note for ServiceRequest "Renamed from ConsumerService"
+    note for ServiceRequest "What is ILPActionDate? What is status, intake, exit?"
+    note for ServiceRequest "What is the date property for?"
+    note for ServiceRequest "primaryEmployee should not be a string. It should be an FK to an employee."
+    note for ServiceRequest "Why is deceased defined both here and on Consumer?"
+    note for ServiceRequest "Grant should be an FK to a Grant object of some sort"
+    note for ServiceRequest "The hours property does not track by employee. Should hours be calculated from some sort of 'Update' entity in a one-to-many relationship?"
+
+    Update "n" --> "1" ServiceRequest
+    Update "n" --> "1" ServiceRequest
+    class Update {
+        UUIDv4 id
+        ServiceRequest regarding
+        Employee author
+        DateTime createdAt
+        TimeInterval duration
+        ?string comments
     }
 
-    class Goals {
+    Attachment "n" --> "1" Update
+    class Attachment {
+        UUIDv4 id
+        Update attachedTo
+        string originalName
+        string filesystemLocation
+        string mime
+        int size
+    }
+
+
+    Goal "n" --> "1" Consumer
+    Goal .. Place
+    class Goal {
+        Consumer consumer
+        DateTime createdAt
+        DateTime closedAt
         date initialDate
         string type
         string futureReference
-        string grant
         string goalStatus
         date estimatedCompletionDate
         string goalDescription
         string outcome
         string outcomeDescription
-        date closureDate
-		bool addressRequired
-		Place[] addresses
+        bool addressRequired
+        Place[] addresses
     }
+    note for Goal "What is type? This should not be a string, ideally an entity or an enum."
+    note for Goal "What is outcome? Is this something that can be described in an update entity?"
+    note for Goal "How to handle addresses? We can't use arrays in DBMS."
 
+    CommunityServiceEvent .. Place
+    CommunityServiceEvent "n" --> "1" Organization
     class CommunityServiceEvent {
         date initialDate
         string category
@@ -107,35 +174,15 @@ classDiagram
         string serviceDescription
         string outcome
         int publications
-        int personsWithDisabilities
-        int generalPublic
-		bool addressRequired
-		Place[] addresses
+        int personsWithDisabilitiesCount
+        int generalPublicCount
+        bool addressRequired
+        Place[] addresses
     }
+    note for CommunityServiceEvent "What is category? Enum or entity? We should NOT use string."
+    note for CommunityServiceEvent "What to do about addresses? Does this also need an update entity?"
 
-    class Attachments {
-    	string notes
-    	array attachments
+    class Grant {
+        UUIDv4 id
     }
-
-	%% Relationships
-	Individual "1" --> "0..1" Employee : is
-	Individual "1" --> "1" Memberships : has
-	Individual "1" --> "0..*" InformationAndReferral : has
-	Individual "1" --> "1" Eligibility : has
-	Individual "1" --> "0..*" ConsumerService : has
-	InformationAndReferral "1" --> "1" Employee : has
-	ConsumerService "1" --> "1" Employee : has
-	ConsumerService "1" --> "0..*" Goals : sets
-	Memberships "1" --> "0..1" Organization : has
-	Organization "1" --> "0..1" CommunityServiceEvent: has
-	InformationAndReferral "1" --> "0..1" Place : has
-	Individual "1" --> "1" Place : has
-	CommunityServiceEvent "1" --> "0..*" Place : has
-	Goals "1" --> "0..*" Place : has
-	Memberships "1" --> "0..*" Place : has
-	Organization "1" --> "0..*" Place : has
-	Individual "1" --> "1" Attachments : has
-	Organization "1" --> "1" Attachments : has
-	Individual "1" --> "1" Contact : has
-	Organization "1" --> "1" Contact : has
+    note for Grant "What properties are relevant to grants?"
