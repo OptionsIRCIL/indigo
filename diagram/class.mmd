@@ -3,6 +3,147 @@ config:
   layout: elk
 ---
 classDiagram
+	class EnumCategory{
+		<<enumeration>>
+		CASE_1 = "*Equipment"
+		CASE_2 = "*Equipment Loaner"
+		CASE_3 = "*Recreation"
+		CASE_4 = "*Social Security Work Incentives"
+		CASE_5 = "Communication"
+		CASE_6 = "Education"
+		CASE_7 = "Extension Office"
+		CASE_8 = "Mobility"
+		CASE_9 = "Nursing Facility"
+		CASE_10 = "Other"
+		CASE_11 = "Peer Visitation"
+		CASE_12 = "Residential"
+		CASE_13 = "Self Care"
+		CASE_14 = "Travel"
+		CASE_15 = "Vocation"
+	}
+	note for EnumCategory "INCOMPLETE SAMPLE. SUBJECT TO CHANGE."
+	note for EnumCategory "Purpose: What is the I&R about? Why did they call?"
+
+	class EnumConsumerPersonalStatus{
+		<<enumeration>>
+		CASE_1 = "None"
+		CASE_2 = "Assisted Living"
+		CASE_3 = "Broken out"
+		CASE_4 = "Family/Friend"
+		CASE_5 = "Homeless"
+		CASE_6 = "Independent"
+		CASE_7 = "Institutional"
+		CASE_8 = "Kept from Institution"
+		CASE_9 = "Other"
+	}
+	note for EnumConsumerPersonalStatus "Purpose: The status of the consumer on Intake and Exit"
+
+	class EnumConsumerRecordStatus{
+		<<enumeration>>
+		CASE_1 = "Active"
+		CASE_2 = "Active: Short Form"
+		CASE_3 = "Does not have one"
+		CASE_4 = "Inactive: Died"
+		CASE_5 = "Inactive: Goals Met"
+		CASE_6 = "Inactive: Moved"
+		CASE_7 = "Inactive: Other"
+		CASE_8 = "Inactive: Withdrew"
+	}
+	note for EnumConsumerRecordStatus "Purpose: Whether the Consumer Service Record is active or not and why"
+
+	class EnumConsumerServiceType{
+		<<enumeration>>
+		CASE_1 = "Charting"
+		CASE_2 = "Independent Living Skills"
+		CASE_3 = "Ind Advocacy"
+		CASE_4 = "Peer Visitation"
+		CASE_5 = "Group"
+		CASE_6 = "Travel Hours"
+	}
+	note for EnumConsumerServiceType "Purpose: What kind of billable work (related to a Consumer Service Record)"
+	
+	class EnumFutureReference{
+		<<enumeration>>
+		CASE_1 = "None"
+		CASE_2 = "1a - Medical"
+		CASE_3 = "1b - Nursing Homes"
+	}
+	note for EnumFutureReference "INCOMPLETE SAMPLE. SUBJECT TO CHANGE."
+	note for EnumFutureReference "Matches Options' yearly plan."
+
+	class EnumGoalOutcome{
+		<<enumeration>>
+		CASE_1 = "None"
+		CASE_2 = "Assistive Technology"
+		CASE_3 = "Health Care"
+		CASE_4 = "Transportation"
+	}
+	note for EnumGoalOutcome "Purpose: Required by PPR"
+
+	class EnumGoalStatus{
+		<<enumeration>>
+		CASE_1 = "None"
+		CASE_2 = "Active"
+		CASE_3 = "Completed"
+		CASE_4 = "Dropped"
+	}
+	note for EnumGoalStatus "Purpose: Required by PPR."
+
+	class EnumGoalType{
+		<<enumeration>>
+		CASE_1 = "None"
+		CASE_2 = "Communication"
+		CASE_3 = "Community-Based Living"
+		CASE_4 = "Community/Social Participation"
+		CASE_5 = "Communication"
+		CASE_6 = "Diversions"
+		CASE_7 = "Educational"
+		CASE_8 = "Information Access/Technology"
+		CASE_9 = "Mobility/Transportation"
+		CASE_10 = "Other"
+		CASE_11 = "Other Peer Visiting"
+		CASE_12 = "Personal Resource Management"
+		CASE_13 = "Relocation From Nursing Home/Institution"
+		CASE_14 = "Self-Care"
+		CASE_15 = "Self-Advocacy / Self-Empowerment"
+		CASE_16 = "Trans Post Secondary"
+		CASE_17 = "Vocational"
+	}
+	note for EnumGoalType "Purpose: What type of goal. Likely required for PPR."
+
+	class EnumGrants{
+		<<enumeration>>
+		CASE_1 = "MN RS/IL"
+		CASE_2 = "ND ADRL"
+	}
+	note for EnumGrants "INCOMPLETE SAMPLE. SUBJECT TO CHANGE."
+	note for EnumGrants "Purpose: Which funding source the billable hours are under"
+
+	class EnumIndependentLivingActivity{
+		<<enumeration>>
+		CASE_1 = "Developed - given copy"
+		CASE_2 = "Developed - not given copy"
+		CASE_3 = "Waived"
+	}
+	note for EnumIndependentLivingActivity "Purpose: The status on the Independent Living Plan"
+	
+	class EnumIndividualDescription{
+		<<enumeration>>
+		CASE_1 = "Consumer with a Disability"
+		CASE_2 = "Family/Friend"
+		CASE_3 = "General Public"
+	}
+	note for EnumIndividualDescription "INCOMPLETE SAMPLE. SUBJECT TO CHANGE."
+	note for EnumIndividualDescription "Purpose: Distinguishes Consumers from other Individuals"
+	
+	class EnumIrServiceType{
+		<<enumeration>>
+		CASE_1 = "Service"
+		CASE_2 = "Travel Hours"
+	}
+	note for EnumIrServiceType "Purpose: What kind of billable work (related to I&R)"
+
+
     class Employee {
         UUIDv4 id
         string username
@@ -14,35 +155,34 @@ classDiagram
     note for Employee "Usernames are assumed to be mutable, therefore a static ID is also set"
     note for Employee "Data populated from AD upon successful auth"
     note for Employee "TODO: populate id from some AD attribute?"
-
-
-    Consumer "n" --> "1" Employee
-    Consumer "n" -- "m" Disability: *Associative Table
-    Consumer .. Place
-    class Consumer {
+    
+    Individual "n" --> "1" Employee
+    Individual "n" -- "m" Disability: *Associative Table
+    Individual .. Place
+    class Individual {
         UUIDv4 id
         string firstName
         string lastName
         string salutation
         DateTime birthday
+        EnumIndividualDescription description
         string email
         string phone
         bool active
         bool deceased
-        ?Employee primaryContact
         Place serviceArea
+        ?Employee primaryContact
         ?Place mailingAddress
-
     }
 
-    Race "n" -- "m" Consumer: *Associative Table
+    Race "n" -- "m" Individual: *Associative Table
     class Race {
         string name
     }
     note for Race "id(name)"
     note for Race "Does this need an 'antiquated' flag or something?"
 
-    Gender "n" -- "m" Consumer: *Associative Table
+    Gender "n" -- "m" Individual: *Associative Table
     class Gender {
         UUIDv4 id
         string name
@@ -80,56 +220,46 @@ classDiagram
     note for Organization "Why is address an array? Can this be a single value?"
 
     InformationAndReferral "n" --> "1" Grant
-    InformationAndReferral "1" --> "1" Consumer
+    InformationAndReferral "1" --> "1" Individual
     InformationAndReferral "n" --> "1" Employee
     InformationAndReferral .. Place
     class InformationAndReferral {
+        date date
         date initialDate
-        string category
-        string regarding
-        string outcome
-        string date
         Employee primaryContact
-        Grant grant
-        string serviceType
+        EnumCategory category
+        EnumGrants grant
+        EnumIrServiceType serviceType
         int hours
-        bool addressRequired
-        array addresses
+        text outcomeDescription
+        text regarding
     }
-    note for InformationAndReferral "This is still unclear to me. If this form is done for each logged consumer, should this be merged into that entity?"
-    note for InformationAndReferral "Can multiple employees work on this? Do we need more granular time tracking?"
-    note for InformationAndReferral "serviceType, category, and grant should all be their own entities imo."
-    note for InformationAndReferral "No arrays, and if we *do* need them, use generics"
 
-    ServiceRequest "n" --> "1" Grant
-    ServiceRequest "n" --> "1" Consumer
-    class ServiceRequest {
+    ConsumerService "n" --> "1" Grant
+    ConsumerService "n" --> "1" Individual
+    class ConsumerService {
         int consumerServiceFileNumber
-        string status
-        DateTime createdAt
         date activatesAt
         date closesAt
-        string independentLivingActivity
-        string intake
-        string exit
-        date ILPActionDate
         date date
-        string primaryEmployee
-        string grant
-        string type
+        date ILPActionDate
+        DateTime createdAt
+        Employee primaryEmployee
+        EnumConsumerType type
+        EnumGrants grant
+        EnumIndependentLivingActivity independentLivingActivity
+        EnumConsumerPersonalStatus intake
+        EnumConsumerPersonalStatus exit
+        EnumConsumerRecordStatus status
     }
-    note for ServiceRequest "Renamed from ConsumerService"
-    note for ServiceRequest "What is ILPActionDate? What is status, intake, exit?"
-    note for ServiceRequest "What is the date property for?"
-    note for ServiceRequest "primaryEmployee should not be a string. It should be an FK to an employee."
-    note for ServiceRequest "Why is deceased defined both here and on Consumer?"
-    note for ServiceRequest "Grant should be an FK to a Grant object of some sort"
-    note for ServiceRequest "The hours property does not track by employee. Should hours be calculated from some sort of 'Update' entity in a one-to-many relationship?"
+    note for ConsumerService "primaryEmployee should not be a string. It should be an FK to an employee."
+    note for ConsumerService "Grant should be an FK to a Grant object of some sort"
+    note for ConsumerService "The hours property does not track by employee. Should hours be calculated from some sort of 'Update' entity in a one-to-many relationship?"
 
-    Update "n" --> "1" ServiceRequest
+    Update "n" --> "1" ConsumerService
     class Update {
         UUIDv4 id
-        ServiceRequest regarding
+        ConsumerService regarding
         Employee author
         DateTime createdAt
         TimeInterval duration
@@ -147,42 +277,37 @@ classDiagram
     }
 
 
-    Goal "n" --> "1" Consumer
+    Goal "n" --> "1" Individual
     Goal .. Place
     class Goal {
-        Consumer consumer
-        DateTime createdAt
-        DateTime closedAt
-        date initialDate
-        string type
-        string futureReference
-        string goalStatus
         date estimatedCompletionDate
-        string goalDescription
-        string outcome
-        string outcomeDescription
-        bool addressRequired
-        Place[] addresses
+        date initialDate
+        DateTime closedAt
+        DateTime createdAt
+        EnumFutureReference futureReference
+        EnumGoalStatus goalStatus
+        EnumGoalType type
+        EnumGoalOutcome goalOutcome
+        Individual individual
+        text goalDescription
+        text outcomeDescription
     }
-    note for Goal "What is type? This should not be a string, ideally an entity or an enum."
-    note for Goal "What is outcome? Is this something that can be described in an update entity?"
     note for Goal "How to handle addresses? We can't use arrays in DBMS."
 
     CommunityServiceEvent .. Place
     CommunityServiceEvent "n" --> "1" Organization
     class CommunityServiceEvent {
         date initialDate
-        string category
-        string futureReference
-        string serviceDescription
-        string outcome
+        EnumCategory category
+        EnumFutureReference futureReference
+        text serviceDescription
+        text outcomeDescription
         int publications
         int personsWithDisabilitiesCount
         int generalPublicCount
         bool addressRequired
         Place[] addresses
     }
-    note for CommunityServiceEvent "What is category? Enum or entity? We should NOT use string."
     note for CommunityServiceEvent "What to do about addresses? Does this also need an update entity?"
 
     class Grant {
