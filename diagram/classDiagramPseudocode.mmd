@@ -78,6 +78,13 @@ classDiagram
     }
     note for Organization "Why is address an array? Can this be a single value?"
 
+	Organization "1" --> "1" Services
+    Organization .. Services
+    class Services {
+        ?
+    }
+    note for Organization "Based on InformUSA I&R Standards. Hand-wave for now."
+
     InformationAndReferral "n" --> "1" Grant
     InformationAndReferral "1" --> "1" Individual
     InformationAndReferral "n" --> "1" Employee
