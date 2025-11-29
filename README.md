@@ -237,7 +237,7 @@ Additionally, the following information is required to be visible for admin user
         </tr>
         <tr>
             <th>Record Inclusion (e.g. displayed online, in specific portals, directories, etc.)</th>
-            <td>MandatoRecommendedry</td>
+            <td>Mandatory</td>
             <td>Recommended</td>
             <td>Recommended</td>
         </tr>
