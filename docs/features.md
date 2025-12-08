@@ -24,19 +24,17 @@ The following data points can be stored for a given individual:
 ### Fuzzy Search and Deduplication
 
 To reduce the number of duplicate records, the search functionality in Indigo 
-is "fuzzy". This means that inexact searches are more likely to bring up 
-similar records.
+has both autocomplete and fuzzy finding. This means that inexact searches are 
+more likely to give results of similar records.
 
 Additionally, duplicate records for the same individual may be merged.
-
-TODO: Document specific algorithm(s) used.
 
 ### User Input
 
 User Input is guided by mechanisms that help ensure (but does not guarantee) the correctness of the input.
 
 - Input fields restricted to only valid options
-- Popups for data that is too large/small (better term for this?)
+- Alerts for quantities that seem too large or small
 
 ### Data Retention and Disposal
 
@@ -44,16 +42,18 @@ HIPAA and Options IRCIL policy dictate that records shall be retained for at
 least seven years.
 
 Once a record is closed, and seven years have passed since the closure date, 
-nearly all individual PII (such as name, location, etc.) will be purged.
+nearly all individual PII (such as name, location, etc.) can be purged.
+
+It cannot be purged earlier than seven years after the closure date, unless 
+the duration is overridden by an administrator.
 
 Anonymized statistical data may be retained if desired, or can be discarded 
 alongside the PII.
 
-At this time, disposal will be manually invoked by an administrator in 
-September, the end of Options' fiscal year.
+At this time, disposal will be manually invoked by an administrator.
 
-Organization records, and other non-consumer records selected by 
-administrators, are exempt from expunction.
+Organizational records, and other non-consumer related individual records as 
+selected by administrators, are exempt from expunction.
 
 ### Goal Tracking
 
@@ -86,7 +86,7 @@ revised with ease. Tools are also provided to remind Consumer Navigation
 Services when it's time to contact an organization or agency to review 
 any previously discussed programs and services.
 
-## Output Formats
+## PDF Output
 
 Nearly all data from Indigo may be output from the database into a printable PDF 
 format. The structure of the forms and the data contained is specified 
@@ -98,8 +98,8 @@ via the redaction of said information when not strictly neccessary.
 Indigo contains tools to assist in the manual review of the data used to 
 populate reports by Administrators.
 
-- Table View
-- Automatic Flagging of data that is too large/small
+- Birds-Eye Tabular View
+- Automatic flagging of quantities that seem too large or small
 
 ### Report Builder
 
@@ -112,6 +112,10 @@ unique name and can be saved for future reuse.
 ### Key Performance Indicators (KPIs)
 
 Some KPIs are directly derived from Inform USA Standards.
+
+- Placeholder
+
+Some KPIs are directly derived from Web Content Accessibility Standards.
 
 - Placeholder
 
