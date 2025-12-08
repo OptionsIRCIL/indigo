@@ -18,6 +18,18 @@ This repository is to be utilized for overarching documentation across
 the Indigo system, a Community Navigation Software designed in line with the
 [Inform USA Standards v10.1](https://www.informusa.org/standards).
 
+## Compiling Web Documentation
+
+The following commands can be used to compile mkdocs documentation
+for this repo:
+
+```sh
+python3 -m venv .venv;
+source .venv/bin/activate;
+pip install -r requirements.txt;
+mkdocs serve;
+```
+
 ## Project Specifications
 
 Required by appendix 2 of the Inform USA spec, the following data elements

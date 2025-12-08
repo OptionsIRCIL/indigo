@@ -1,0 +1,36 @@
+site_name: Indigo CNS Documentation
+site_url: http://localhost:8000
+theme:
+  name: material
+  palette:
+    primary: deep purple
+nav:
+  - Home: index.md
+  - Features: features.md
+  - Specification:
+    - Terminology: terminology.md
+    - Design: design.md
+    - REST API: api.md
+  - Administration Guide:
+    - Installation: installation.md
+    - Database Setup: database.md
+    - Authentication: authentication.md
+    - Grants: grants.md
+    - Branding: branding.md
+  - User Manual:
+    - Stub: manual_stub.md
+  - About:
+    - License: license.md
+    - Project Authors: authors.md
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
