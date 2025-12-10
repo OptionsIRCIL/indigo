@@ -1,6 +1,6 @@
 [submodule "backend"]
 	path = backend
-	url = git@github.com:OptionsIRCIL/indigo-backend.git
+	url = https://github.com/OptionsIRCIL/indigo-backend
 [submodule "frontend"]
 	path = frontend
-	url = git@github.com:OptionsIRCIL/indigo-frontend.git
+	url = https://github.com/OptionsIRCIL/indigo-frontend
