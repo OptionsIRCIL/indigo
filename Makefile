@@ -31,7 +31,7 @@ dist/frontend/browser/index.html: frontend/node_modules
 frontend/node_modules:
 	npm install --verbose --prefix=./frontend
 
-clean: clean_go clean_npm
+clean: clean_go clean_npm clean_buildx_builder
 	rm -rf ./dist
 
 clean_go:
