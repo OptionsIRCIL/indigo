@@ -1,3 +1,4 @@
 .idea
+.venv
 *.mmd.png
 *.mmd.svg
