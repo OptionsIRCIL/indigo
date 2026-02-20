@@ -1,2 +1,6 @@
+# env file
+.env
+config.json
+
+# dist folder
 dist/
-.idea/
