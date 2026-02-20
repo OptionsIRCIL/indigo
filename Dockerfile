@@ -3,9 +3,9 @@ FROM alpine:3.23.0
 # Install required packages
 # TODO: Compile backend binary with musl to avoid needing gcompat
 RUN apk add -v \
-      nginx=~1.28.0 \
-      openssl=~3.5.4 \
-      gcompat=~1.1.0-r4
+      nginx=~1 \
+      openssl=~3 \
+      gcompat=~1
 
 # Install server
 COPY --chmod=0755 dist/backend/indigo_backend /usr/bin/indigo_backend

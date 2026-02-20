@@ -34,4 +34,4 @@ nginx &
 # Start server
 # TODO: Socket permissions are bad. Figure out a way to let nginx read/write socket.
 cd /var/indigo || (echo "FATAL: Couldn't enter /var/indigo" && exit 1)
-indigo_backend -socket /var/run/indigo_backend.sock -socket_gid "$(getent group nginx | cut -d: -f3)"
+indigo_backend serve -socket /var/run/indigo_backend.sock -socket_gid "$(getent group nginx | cut -d: -f3)"
