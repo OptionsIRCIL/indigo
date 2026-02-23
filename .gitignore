@@ -4,3 +4,7 @@ config.json
 
 # dist folder
 dist/
+
+# temporary files
+*.swp
+*.kate-swp
