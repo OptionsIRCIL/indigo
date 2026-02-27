@@ -42,10 +42,7 @@ jobs:
           target: dist
           tags: OptionsIRCIL/indigo:${{ needs.tag.outputs.tag }}, OptionsIRCIL/indigo:latest
           platforms: linux/amd64
-          outputs: type=docker,dest=dist/image.tar
-
-      - name: Zip image
-        run: gzip dest/image.tar
+          outputs: type=docker,dest=dist/image.tar.gz
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
