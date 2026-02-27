@@ -41,7 +41,7 @@ jobs:
           context: .
           target: dist
           tags: OptionsIRCIL/indigo:${{ needs.tag.outputs.tag }}, OptionsIRCIL/indigo:latest
-          platforms: linux/amd64, linux/arm64
+          platforms: linux/amd64
           outputs: type=local,dest=dist/image.tar.gz
 
       - name: Upload artifact
@@ -61,13 +61,8 @@ jobs:
         with:
           name: "image.tar.gz"
 
-      # TODO: Finish
-
-      - name: Install container
-        run: install -m 775 indigo /stack/bin/
-
-      - name: Install API documentation
-        run: install -m 775 redoc-static.html /stack/www/api/
+      - name: Import artifact
+        run: docker load < image.tar.gz
 
       - name: Restart bleeding container
-        run: docker compose --project-directory /stack restart bleeding
+        run: docker compose up -d --force-recreate
