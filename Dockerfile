@@ -1,10 +1,5 @@
 # syntax=docker/dockerfile:1-labs
-FROM alpine:3.23.3 AS indigo_skel
-RUN apk add -v \
-      nginx=~1 \
-      openssl=~3
-
-FROM indigo_skel AS indigo_compile
+FROM alpine:3.23.3 AS builder
 RUN apk add -v \
     npm \
     go=~1.25
@@ -29,14 +24,14 @@ RUN npm run ng build indigo-frontend --verbose --prefix=/src/frontend -- \
     --output-mode=static \
     --verbose
 
-FROM indigo_skel AS dist
+FROM nginx:1.29-alpine AS dist
 
 # Install server
-COPY --chmod=0755 --from=indigo_compile /dist/server /usr/bin/indigo_backend
+COPY --chmod=0755 --from=builder /dist/server /usr/bin/indigo_backend
 
 # Install client
-COPY --from=indigo_compile /dist/frontend/browser /var/www/browser
-COPY --from=indigo_compile /dist/frontend/3rdpartylicenses.txt /var/www/browser/3rdpartylicenses_frontend.txt
+COPY --from=builder /dist/frontend/browser /var/www/browser
+COPY --from=builder /dist/frontend/3rdpartylicenses.txt /var/www/browser/3rdpartylicenses_frontend.txt
 
 # Install nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
