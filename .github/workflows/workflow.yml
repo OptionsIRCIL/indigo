@@ -38,9 +38,10 @@ jobs:
       - name: Build container
         uses: docker/build-push-action@v6
         with:
+          context: .
           target: dist
           tags: OptionsIRCIL/indigo:${{ needs.tag.outputs.tag }}, OptionsIRCIL/indigo:latest
-          platform: linux/amd64, linux/arm64
+          platforms: linux/amd64, linux/arm64
           outputs: type=local,dest=dist/image.tar.gz
 
       - name: Upload artifact
