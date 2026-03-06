@@ -5,10 +5,6 @@
 To ensure Indigo can be useful to the broadest possible audience, this project
 is committed to adhering to any applicable industry standards.
 
-### Inform USA Spec
-
-lorem ipsum
-
 ### WCAG 2.0
 
 lorem ipsum

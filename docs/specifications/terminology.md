@@ -7,6 +7,8 @@ other than Options IRCIL, Indigo adopts most of its terminology and design
 practices from [Inform USA](https://www.informusa.org/)'s
 [CNS Standards v10.1](https://www.informusa.org/standards).
 
+TODO Remove
+
 ## Base Definitions
 
 The following terms are used broadly across the application and are essential

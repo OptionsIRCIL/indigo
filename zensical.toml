@@ -58,7 +58,7 @@ nav = [
   ] },
   { "Administration Guide" = [
     { "Installation" = "administration-guide/installation.md" },
-    { "Configuration" = "administration-guide/configuration" }
+    { "Configuration" = "administration-guide/configuration.md" }
   ] },
   { "User Manual" = [
     { "Stub" = "manual_stub.md" }
@@ -341,3 +341,5 @@ toggle.name = "Switch to system preference"
 #link = "https://github.com/user/repo"
 
 
+[project.extra.annotate]
+json = ["s2"]

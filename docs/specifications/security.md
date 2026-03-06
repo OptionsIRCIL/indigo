@@ -46,10 +46,6 @@ by the user. If the connection is successful, the user credentials are assumed
 to be valid. The server then connects to the LDAP server with its own
 credentials (ideally a service account). Employee data is pulled and returned.
 
-### OpenID Connect
-
-TODO
-
 
 *[LDAP]: Lightweight Directory Access Protocol
 *[JWT]: JSON Web Token
