@@ -1,0 +1,8 @@
+[submodule "backend"]
+	path = backend
+	url = ../indigo-backend.git
+	branch = main
+[submodule "frontend"]
+	path = frontend
+	url = ../indigo-frontend.git
+	branch = main

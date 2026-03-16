@@ -1,5 +1,20 @@
+
+# Jetbrains config
 .idea
+
+# Python environment
 .venv
+
+# Generated files
 *.mmd.png
 *.mmd.svg
-site
+site/
+dist/
+
+# Secrets
+.env
+config.json
+
+# Temporary files
+*.swp
+*.kate-swp

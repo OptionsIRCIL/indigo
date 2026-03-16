@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /var/indigo || exit 1;
+/usr/bin/indigo_backend create_user $@;
