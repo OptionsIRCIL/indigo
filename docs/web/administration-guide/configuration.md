@@ -6,8 +6,7 @@ JSON schema is available [in the backend repo](https://github.com/OptionsIRCIL/i
 
 <!-- Add hyperlinks to config.json keys -->
 <script type="module">
-    // TODO: This doesn't seem to trigger in some instances. I don't like that.
-    addEventListener("DOMContentLoaded", () => {
+    function addJsonKeyLinks(){
         document.querySelectorAll(".language-json .md-code__content .nt").forEach(
             (keyElement, i) => {
                 const keyText = keyElement.innerText
@@ -19,7 +18,8 @@ JSON schema is available [in the backend repo](https://github.com/OptionsIRCIL/i
                     keyElement.innerHTML = `"<a href="#${heading.id}" class="nt" style="text-decoration: underline;">${key}</a>"`;
                 }
             })
-    });
+    }
+    addEventListener("DOMContentLoaded", addJsonKeyLinks);
 </script>
 
 ```json title="config.json"
@@ -46,7 +46,7 @@ Config files should be [mounted to the container filesystem](https://docs.docker
 
 !!! example "Updated Example File Structure"
       For those using the template `compose.yml` provided
-      in [Installation](./installation.md), you may place `config.json` in `./config/`.
+      in [Installation](installation.md), you may place `config.json` in `./config/`.
       <div class="file-tree" markdown>
 
       - 📁 indigo

@@ -1,7 +1,7 @@
 <table role="presentation" border="0" cellspacing="0" width="100%">
     <tr>
         <td>
-            <img width=128 height=128 src="graphics/logo/display.svg" alt="Options Indigo logo"/>
+            <img width=128 height=128 src="docs/asset/logo/display.svg" alt="Options Indigo logo"/>
         </td>
         <td>
             <h1>Indigo Community Navigation System</h1>
