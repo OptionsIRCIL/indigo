@@ -2,7 +2,7 @@
 
 ## Variable Names
 
-For variable names, all export variables should be written in 
+For variable names, all export variables should be written in
 [PascalCase](https://en.wikipedia.org/wiki/Camel_case#Variations_and_synonyms).
 
 Local variables should be written in camelCase. Acronyms are to be written with
@@ -34,13 +34,6 @@ however certain special documents may be in all caps
 (excluding the extension which remains lowercase).
 
 Examples include but are not limited to README.md, LICENSE, COPYING, etc.[^4]
-
-## Git Hooks
-
-In each repository, a `.githooks` directory is present.
-
-Follow the instructions in `.githooks/README.md` to configure the
-relevant code formatter and corresponding pre-commit git hooks.
 
 [^1]: https://en.wikipedia.org/wiki/Camel_case#Programming_and_coding
 

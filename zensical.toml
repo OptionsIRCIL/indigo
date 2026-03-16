@@ -27,14 +27,19 @@ nav = [
   { "Administration Guide" = [
     { "Installation" = "administration-guide/installation.md" },
     { "Configuration" = "administration-guide/configuration.md" },
-    { "SSL Certificates" = "administration-guide/ssl.md" }
+    { "SSL Certificates" = "administration-guide/ssl.md" },
+    { "Maintenance Commands" = "administration-guide/maintenance.md" }
   ] },
   { "User Manual" = [
-    { "Stub" = "manual_stub.md" }
+    { "Stub" = "user-manual/stub.md" }
+  ] },
+  { "Contributing" = [
+    { "Coding Conventions" = "contributing/convention.md" },
+    { "Documentation Generation" = "contributing/online-documentation.md" }
   ] },
   { "About" = [
-    { "License" = "license.md" },
-    { "Project Authors" = "authors.md" }
+    { "License" = "about/license.md" },
+    { "Project Authors" = "about/authors.md" }
   ] }
 ]
 

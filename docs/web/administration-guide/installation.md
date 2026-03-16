@@ -2,7 +2,7 @@
 
 The preferred method to install Indigo on your server is via
 [Docker Compose](https://docs.docker.com/compose/). Stable builds of the product are 
-[delivered via ghrc.io](https://github.com/OptionsIRCIL/indigo/pkgs/container/indigo).
+[delivered via ghcr.io](https://github.com/OptionsIRCIL/indigo/pkgs/container/indigo).
 
 ## Compose Template
 

@@ -39,8 +39,8 @@
             border-image: linear-gradient(
                     to bottom, 
                     var(--md-code-fg-color), 
-                    var(--md-code-fg-color) 0.625rem, 
-                    transparent 0.625rem, 
+                    var(--md-code-fg-color) 0.565rem,
+                    transparent 0.565rem,
                     transparent
                 ) 1 100%;
             border-left-width: 1px;

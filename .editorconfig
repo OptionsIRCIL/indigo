@@ -6,5 +6,5 @@ end_of_line = lf
 insert_final_newline = true
 
 # 2-space indent
-[*.{json,yml,yaml}]
+[*.{json,yml,yaml,toml}]
 indent_size: 2
