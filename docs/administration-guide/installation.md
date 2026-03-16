@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
     volumes:
       - type: bind
-        source: ./indigo_data
+        source: ./data/mariadb
         target: /var/lib/mysql
     environment:
       MARIADB_ROOT_PASSWORD: "correct-horse-battery-staple"
@@ -32,10 +32,28 @@ services:
         condition: service_healthy
     volumes:
       - type: bind
-        source: ./indigo_config
+        source: ./config
         target: /var/indigo
         readonly: true
+      - type: bind
+        source: ./data/indigo
+        target: /placeholder
+        readonly: true
 ```
+
+!!! example "Example File Structure"
+      If you're using the default bind mounts, your file structure 
+      should look something like this:
+      <div class="file-tree" markdown>
+
+      - 📁 indigo
+         - 📄 compose.yml
+         - 📁 config
+         - 📁 data
+            - 📁 indigo
+            - 📁 mariadb
+
+      </div>
 
 Changes may be made as needed, such as if port remapping is required. 
 When finished, proceed to [Configuration](configuration.md).

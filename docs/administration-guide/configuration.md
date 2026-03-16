@@ -4,11 +4,6 @@ Indigo is configured via a JSON file. The following snippet is an example
 configuration. Each field is expanded upon within this page, and a
 JSON schema is available [in the backend repo](https://github.com/OptionsIRCIL/indigo-backend/blob/local_auth/docs/config-schema.json).
 
-Config files should be [mounted to the container filesystem](https://docs.docker.com/reference/compose-file/services/#volumes) at 
-`/var/indigo/config.json`. If the config file must reside in a different location, 
-the environment variable `INDIGO_CONFIG_LOCATION` can be used to specify 
-an alternate location.
-
 <!-- Add hyperlinks to config.json keys -->
 <script type="module">
     // TODO: This doesn't seem to trigger in some instances. I don't like that.
@@ -45,6 +40,28 @@ an alternate location.
   }
 }
 ```
+
+Config files should be [mounted to the container filesystem](https://docs.docker.com/reference/compose-file/services/#volumes) at 
+`/var/indigo/config.json`. 
+
+!!! example "Updated Example File Structure"
+      For those using the template `compose.yml` provided
+      in [Installation](./installation.md), you may place `config.json` in `./config/`.
+      <div class="file-tree" markdown>
+
+      - 📁 indigo
+         - 📄 compose.yml
+         - 📁 config
+            - ⚙️ config.json
+         - 📁 data
+            - 📁 indigo
+            - 📁 mariadb
+
+      </div>
+
+If the config file must reside in a different location, 
+the environment variable `INDIGO_CONFIG_LOCATION` can be used to specify 
+an alternate location.
 
 ## `database` { .json-key-0 }
 

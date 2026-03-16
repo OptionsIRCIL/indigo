@@ -58,7 +58,8 @@ nav = [
   ] },
   { "Administration Guide" = [
     { "Installation" = "administration-guide/installation.md" },
-    { "Configuration" = "administration-guide/configuration.md" }
+    { "Configuration" = "administration-guide/configuration.md" },
+    { "SSL Certificates" = "administration-guide/ssl.md" }
   ] },
   { "User Manual" = [
     { "Stub" = "manual_stub.md" }
@@ -77,7 +78,7 @@ nav = [
 #
 # Read more: https://zensical.org/docs/customization/#additional-css
 #
-#extra_css = ["stylesheets/extra.css"]
+extra_css = ["stylesheets/file-tree.css"]
 
 # With the `extra_javascript` option you can add your own JavaScript to your
 # project to customize the behavior according to your needs.
@@ -283,8 +284,6 @@ features = [
 media = "(prefers-color-scheme)"
 primary = "deep purple"
 accent = "deep purple"
-toggle.icon = "lucide/sun-moon"
-toggle.name = "Switch to light mode"
 
 # Palette toggle for light mode
 [[project.theme.palette]]
@@ -292,8 +291,6 @@ media = "(prefers-color-scheme: light)"
 primary = "deep purple"
 accent = "deep purple"
 scheme = "default"
-toggle.icon = "lucide/sun"
-toggle.name = "Switch to dark mode"
 
 # Palette toggle for dark mode
 [[project.theme.palette]]
@@ -301,8 +298,6 @@ media = "(prefers-color-scheme: dark)"
 primary = "deep purple"
 accent = "deep purple"
 scheme = "slate"
-toggle.icon = "lucide/moon"
-toggle.name = "Switch to system preference"
 
 # ----------------------------------------------------------------------------
 # In the "font" subsection you can configure the fonts used. By default, fonts
