@@ -1,0 +1,17 @@
+# Hey! Don't use this in production!
+# This compose file is intended for development only.
+# For configuration details, see the web docs.
+# 
+# Developers: This compose file mounts ./config/ and
+# ./data/ into containers. Make sure you've got a valid
+# config file at ./config/config.json.
+include:
+   - path: docs/example/compose.yml
+     project_directory: .
+
+services:
+  indigo:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: dist

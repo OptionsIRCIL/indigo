@@ -1,18 +1,23 @@
-# Jetbrains config
-.idea
+# IDE config
+/.idea
+/.vscode
 
 # Python environment
-.venv
+/.venv
 
 # Generated files
 *.mmd.png
 *.mmd.svg
-site/
-dist/
+/site/
+/dist/
+
+# Compose mounts
+/config/
+/data/
 
 # Secrets
 .env
-config.json
+.env.*
 
 # Temporary files
 *.swp

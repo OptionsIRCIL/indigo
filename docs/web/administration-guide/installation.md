@@ -9,36 +9,7 @@ The preferred method to install Indigo on your server is via
 The following `compose.yml` may be used as a template for new deployments:
 
 ```yaml title="compose.yml"
-services:
-  db:
-    image: mariadb:latest
-    hostname: mariadb
-    restart: unless-stopped
-    volumes:
-      - type: bind
-        source: ./data/mariadb
-        target: /var/lib/mysql
-    environment:
-      MARIADB_ROOT_PASSWORD: "correct-horse-battery-staple"
-      MARIADB_DATABASE: "indigo"
-
-  indigo:
-    image: OptionsIRCIL/indigo:latest
-    restart: unless-stopped
-    ports:
-      - "443:443"
-    depends_on:
-      directory:
-        condition: service_healthy
-    volumes:
-      - type: bind
-        source: ./config
-        target: /var/indigo
-        readonly: true
-      - type: bind
-        source: ./data/indigo
-        target: /placeholder
-        readonly: true
+--8<-- "docs/example/compose.yml"
 ```
 
 !!! example "Example File Structure"

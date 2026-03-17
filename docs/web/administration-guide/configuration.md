@@ -4,10 +4,14 @@ Indigo is configured via a JSON file. The following snippet is an example
 configuration. Each field is expanded upon within this page, and a
 JSON schema is available [in the backend repo](https://github.com/OptionsIRCIL/indigo-backend/blob/local_auth/docs/config-schema.json).
 
+!!! note
+    This config will not function right out of the box. Please read the documentation here,
+    misconfiguration or reused defaults may result in unexpected or undesired behavior.
+
 <!-- Add hyperlinks to config.json keys -->
-<script type="module">
+<script type="module" id="linker">
     function addJsonKeyLinks(){
-        document.querySelectorAll(".language-json .md-code__content .nt").forEach(
+        document.querySelectorAll("script#linker + div.language-json .md-code__content .nt").forEach(
             (keyElement, i) => {
                 const keyText = keyElement.innerText
                 const key = keyText.substring(1, keyText.length - 1)
@@ -23,22 +27,7 @@ JSON schema is available [in the backend repo](https://github.com/OptionsIRCIL/i
 </script>
 
 ```json title="config.json"
-{
-  "database":  {
-    "dsn": "indigo:correct horse battery staple@tcp(db.example.com:3306)/indigo?charset=utf8mb4"
-  },
-  "authentication": {
-    "hmacKey": "this-property-is-required-and-must-be-at-least-64-characters-long",
-    "ldap": {
-      "url": "ldaps://dc1.example.com:636",
-      "domain": "AD",
-      "searchBase": "CN=Users,DC=ad,DC=example,DC=com",
-      "username": "CN=IndigoServiceAcct,CN=Users,DC=ad,DC=example,DC=com",
-      "password": "correct horse battery staple"
-    },
-    "local": {}
-  }
-}
+--8<-- "docs/example/config.json"
 ```
 
 Config files should be [mounted to the container filesystem](https://docs.docker.com/reference/compose-file/services/#volumes) at 
@@ -74,6 +63,13 @@ Your DSN string for database connection. Only MariaDB is supported at the moment
 See [https://github.com/go-sql-driver/mysql#dsn-data-source-name](https://github.com/go-sql-driver/mysql#dsn-data-source-name)
 for string syntax.
 
+!!! example
+    Those using the default `compose.yml` should specify this variable like so:
+    ```json
+    "dsn": "user:pass@tcp(db:3306)/indigo"
+    ```
+    Replace `user` and `pass` with the values configured in `compose.yml`.
+
 ## `authentication` { .json-key-2 }
 
 Options for authentication methods. `hmacKey` and at
@@ -83,6 +79,11 @@ least one configuration mode must be specified.
 
 The HMAC512 key used for signing and verifying issued JWT cookies. The
 key must be at least 64 characters in length.
+
+!!! danger
+    **DO NOT utilize the default secret**. This secret is the root of trust for all
+    cookies issued by the system. If a secret is compromised, bad actors will have
+    the ability to create and sign their own cookies.
 
 ### `authentication.ldap` { #authentication-ldap .json-key-4 }
 

@@ -1,0 +1,31 @@
+services:
+  db:
+    image: mariadb:latest
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ./data/mariadb
+        target: /var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: "correct-horse-battery-staple"
+      MARIADB_DATABASE: "indigo"
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+
+  indigo:
+    image: OptionsIRCIL/indigo:latest
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - type: bind
+        source: ./config
+        target: /var/indigo
+        read_only: true
+      - type: bind
+        source: ./data/indigo
+        target: /placeholder
+        read_only: true

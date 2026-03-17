@@ -1,0 +1,10 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "/data/indigo/config.json",
+        "/docs/example/config.json"
+      ]
+    }
+  ]
+}

@@ -21,10 +21,47 @@ Install [Docker](https://www.docker.com/) on a Linux distribution of your choice
 
 We recommend running Indigo on a stable Linux distribution such as [Debian](https://www.debian.org/) or [Red Hat Enterprise Linux](https://www.redhat.com/en/technologies/linux-platforms/enterprise-linux).
 
-## Deployment
+## Compose Development Quick-Start
 
-```sh
-make
-docker load -i ./dist/image.tar.gz
-docker run --env-file .env -p 80:80 -p 443:443 --mount type=bind,src=./config.json,dst=/var/indigo/config.json,ro -it OptionsIRCIL/indigo:latest
+It's possible to quickly bootstrap this repo like so:
+
+```shell
+# Create config directory
+mkdir -p config/indigo
+
+# Write a basic config
+cat > ./config/indigo/config.json <<EOF
+{
+  "database": {
+    "dsn": "indigo:correct-horse-battery-staple@tcp(db:3306)/indigo"
+  },
+  "authentication": {
+    "hmacKey": "c0ffee->c0ffee->c0ffee->c0ffee->c0ffee->c0ffee->c0ffee->c0ffee!!",
+    "local": {}
+  }
+}
+EOF
+
+# Build and serve
+docker compose up -d --force-recreate --build
+```
+
+Some other useful commands are as follows.
+
+### Log Monitoring
+
+You can check the container logs with `docker compose logs`.
+```shell
+docker compose logs indigo -f
+```
+
+### User Creation
+
+Local users can be made like so:
+```shell
+docker compose run -it indigo idg-create-user \
+    -username "john.doe" \
+    -password "correct-horse-battery-staple" \
+    -first "John" \
+    -last "Doe"
 ```
