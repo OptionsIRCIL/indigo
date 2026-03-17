@@ -8,11 +8,8 @@ cat<<RIZZ
 v0.0.0
 RIZZ
 
-# Ensure cert directory
-mkdir -p /var/indigo/ssl
-
 # Check for SSL certs
-if ! [ -f /var/indigo/ssl/key.pem ] || ! [ -f /var/indigo/ssl/fullchain.cer ]; then
+if ! [ -f /var/indigo/key.pem ] || ! [ -f /var/indigo/fullchain.cer ]; then
   echo "WARNING! No SSL certificates were supplied. If you're connecting clients directly to the container"
   echo "without a reverse proxy, it's highly recommended that one is supplied to prevent server impersonation."
   echo ""
@@ -20,10 +17,10 @@ if ! [ -f /var/indigo/ssl/key.pem ] || ! [ -f /var/indigo/ssl/fullchain.cer ]; t
   openssl req -newkey \
           rsa:2048 \
           -nodes \
-          -keyout /var/indigo/ssl/key.pem \
+          -keyout /var/indigo/key.pem \
           -x509 \
           -subj "/C=US/ST=MN/L=East Grand Forks/O=Options IRCIL/OU=Indigo Project/CN=myoptions.info" \
-          -out /var/indigo/ssl/fullchain.cer
+          -out /var/indigo/fullchain.cer
 fi
 
 echo
@@ -33,5 +30,6 @@ nginx &
 
 # Start server
 # TODO: Socket permissions are bad. Figure out a way to let nginx read/write socket.
+rm -f /var/run/indigo_backend.sock
 cd /var/indigo || (echo "FATAL: Couldn't enter /var/indigo" && exit 1)
 indigo_backend serve -socket /var/run/indigo_backend.sock -socket_gid "$(getent group nginx | cut -d: -f3)"

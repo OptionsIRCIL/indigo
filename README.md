@@ -27,13 +27,13 @@ It's possible to quickly bootstrap this repo like so:
 
 ```shell
 # Create config directory
-mkdir -p config/indigo
+mkdir -p config
 
 # Write a basic config
-cat > ./config/indigo/config.json <<EOF
+cat > ./config/config.json <<EOF
 {
   "database": {
-    "dsn": "indigo:correct-horse-battery-staple@tcp(db:3306)/indigo"
+    "dsn": "root:correct-horse-battery-staple@tcp(db:3306)/indigo"
   },
   "authentication": {
     "hmacKey": "c0ffee->c0ffee->c0ffee->c0ffee->c0ffee->c0ffee->c0ffee->c0ffee!!",
@@ -59,7 +59,7 @@ docker compose logs indigo -f
 
 Local users can be made like so:
 ```shell
-docker compose run -it indigo idg-create-user \
+docker compose exec -it indigo idg-create-user \
     -username "john.doe" \
     -password "correct-horse-battery-staple" \
     -first "John" \

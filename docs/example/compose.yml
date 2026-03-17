@@ -24,8 +24,6 @@ services:
       - type: bind
         source: ./config
         target: /var/indigo
-        read_only: true
       - type: bind
         source: ./data/indigo
         target: /placeholder
-        read_only: true
