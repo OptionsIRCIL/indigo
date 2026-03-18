@@ -136,3 +136,6 @@ permalink = true
 # Footnotes
 # https://zensical.org/docs/authoring/footnotes/
 [project.markdown_extensions.footnotes]
+
+# Definition Lists
+[project.markdown_extensions.def_list]
