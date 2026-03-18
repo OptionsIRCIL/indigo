@@ -5,7 +5,7 @@
 Indigo adopts most of its terminology from 
 the [ILRU](https://www.ilru.org/uploads/legacy/Alphabet_Soup_Independent_Living_Acronyms_0.pdf) and [IL T&TA](https://ilttacenter.org/wp-content/uploads/2025/09/NCIL-2025-Independent-Living-Acronyms.pdf).
 
-This is list is not exhaustive.
+This list is not exhaustive.
 
 ## Terms
 
