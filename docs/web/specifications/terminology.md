@@ -13,13 +13,17 @@ ADA
 : The [Americans with Disabilities Act](https://www.ada.gov/)
 
 Assistive Technology
-: Any physical device meant primarily to assist a person with a disabilty. Includes "low tech" as well as "high tech" devices.
+: Any physical device meant primarily to assist a person with a disabilty.<br>
+Includes "low tech" as well as "high tech" devices.
 
 CEO
-: Community, Education, and Outreach. Records pertaining to primarily community events aimed at education regarding disability advocacy.
+: Community, Education, and Outreach.<br>
+Records pertaining to primarily community events aimed at education regarding disability advocacy.
 
 CIF
-: Consumer Information File (f.k.a. Consumer Service Record, CSR). A paper record of all the information tied to a specific individual consumer. Includes contact information, demographic information, and their ILP.
+: Consumer Information File (f.k.a. Consumer Service Record, CSR).<br>
+A paper record of all the information tied to a specific individual consumer.<br>
+Includes contact information, demographic information, and their ILP.
 
 CIL
 : [Center(s) for Independent Living](https://ncil.org/about/independent-living/)
@@ -28,22 +32,25 @@ Consumer
 : Any recipient of Options' services.
 
 Grant
-: The source of funding that pays for work done by an employee. Most commonly, this is grant funding through a particular state. 
+: The source of funding that pays for work done by an employee.<br>
+Most commonly, this is grant funding through a particular state. 
 
 HIPPA
 : The [Health Insurance Portability and Accountability Act](https://www.cdc.gov/phlp/php/resources/health-insurance-portability-and-accountability-act-of-1996-hipaa.html)
 
 I&R
-: Information and Referral (a.k.a Community Navigation). Initial contact with a consumer and potential referral towards other staff members and/or other entities.
+: Information and Referral (a.k.a Community Navigation).<br>
+Initial contact with a consumer and potential referral to other staff members and/or other entities.
 
 Independent Living
-: The philiosophy of empowering people with disabilities to be able to live as independently as possible. 
+: The philosophy of empowering people with disabilities to be able to live as independently as possible. 
 
 IL
 : Independent Living
 
 ILP
-: Independent Living Plan. An enumerated plan made alongside a consumer on how to achieve their goals.
+: Independent Living Plan.<br>
+An enumerated plan made alongside a consumer on how to achieve their goals.
 
 PII
 : Personally Identifiable Information
