@@ -43,7 +43,7 @@ nav = [
   ] }
 ]
 
-extra_css = ["stylesheets/file-tree.css"]
+extra_css = ["stylesheets/bold.css", "stylesheets/file-tree.css"]
 
 [project.theme]
 variant = "classic"
