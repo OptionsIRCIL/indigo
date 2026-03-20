@@ -1,0 +1,22 @@
+.swagger-ui {
+    .topbar, #operations-tag-default, .information-container{
+        display: none;
+    }
+
+    /* Swagger doesn't have good dark mode support. Force light. */
+    .operation-tag-content > span {
+        background: white;
+        border-radius: 4px;
+        display: block;
+    }
+
+    section.models.is-open {
+        background: white;
+    }
+
+    /* Fix code blocks */
+    pre > code {
+        background: unset;
+        padding: unset;
+    }
+}

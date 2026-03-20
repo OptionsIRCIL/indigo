@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {% if page and page.meta and page.meta.openapi_outlet_id %}
+    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui.css" />
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  
+<!-- Add scripts that need to run before here -->
+  {{ super() }}
+  {% if page and page.meta and page.meta.openapi_outlet_id %}
+    <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js" crossorigin></script>
+    <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-standalone-preset.js" crossorigin></script>
+    <script type="module">
+      window.onload = () => {
+        document$.subscribe(() => {
+            const outlet = document.getElementById('{{page.meta.openapi_outlet_id}}');
+            if (!(outlet instanceof HTMLDivElement))
+              return;
+
+            const spec = JSON.parse(outlet.innerText);
+
+            window.ui = SwaggerUIBundle({
+              dom_id: '#{{page.meta.openapi_outlet_id}}',
+              spec: spec,
+              presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+              ],
+              layout: "StandaloneLayout",
+            });
+        });
+      };
+    </script>
+  {% endif %}
+{% endblock %}

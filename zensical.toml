@@ -43,11 +43,12 @@ nav = [
   ] }
 ]
 
-extra_css = ["stylesheets/file-tree.css"]
+extra_css = ["stylesheet/style.css"]
 
 [project.theme]
 variant = "classic"
 language = "en"
+custom_dir = "docs/override"
 
 features = [
     # Copy button on code fences
@@ -76,6 +77,9 @@ features = [
 
     # Highlight search results
     "search.highlight",
+
+    # Browse site without full-page reloads when following links
+    "navigation.instant"
 ]
 
 # Palette toggle for automatic mode

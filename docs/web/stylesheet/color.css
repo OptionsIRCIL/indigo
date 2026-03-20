@@ -1,0 +1,10 @@
+@media screen {
+    [data-md-color-scheme="slate"]{
+        --md-default-bg-color: hsl(260, 25%, 9.4%);
+        --md-footer-bg-color: hsl(260, 13.4%, 13.1%);
+        --md-footer-bg-color--dark: hsl(255, 10.3%, 15.3%);
+        --md-code-bg-color: hsl(260, 13.4%, 13.1%);
+        --md-code-bg-color--light: hsl(255, 10.3%, 15.3%);
+        --md-code-bg-color--lighter: hsl(260, 13.4%, 13.1%);
+    }
+}
