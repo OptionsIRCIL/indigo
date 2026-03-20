@@ -15,16 +15,15 @@ The following `compose.yml` may be used as a template for new deployments:
 !!! example "Example File Structure"
       If you're using the default bind mounts, your file structure 
       should look something like this:
-      <div class="file-tree" markdown>
 
-      - 📁 indigo
-         - 📄 compose.yml
-         - 📁 config
-         - 📁 data
-            - 📁 indigo
-            - 📁 mariadb
-
-      </div>
+      ```dir
+      📁 indigo
+      ├─ 🐳 compose.yml
+      ├─ 📁 config
+      └─ 📁 data
+         ├─ 📁 indigo
+         └─ 📁 mariadb
+      ```
 
 Changes may be made as needed, such as if port remapping is required. 
 When finished, proceed to [Configuration](configuration.md).

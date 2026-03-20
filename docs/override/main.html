@@ -10,6 +10,47 @@
   
 <!-- Add scripts that need to run before here -->
   {{ super() }}
+  
+  {% if page and page.meta and page.meta.json_toc_id and page.meta.json_toc_first_heading_id %}
+    <!-- 
+      We want to use a JSON code fence as a table of contents. 
+      Wire up each of the keys to a matching heading. 
+    -->
+    <script type="module">
+      function link(){
+        const fence = document.getElementById("{{page.meta.json_toc_id}}");
+        if (!(fence instanceof HTMLDivElement)){
+          console.log("Fence not found or incorrect type in json_toc")
+          return;
+        }
+
+        /* @var {HTMLSpanElement[]} keys */
+        const keys = fence.querySelectorAll("span.nt");
+
+        const hId = "#{{page.meta.json_toc_first_heading_id}}";
+
+        /* @var {HTMLHeadingElement[]} keys */
+        const headings = document.querySelectorAll(`${hId}, ${hId} ~ h2[id], ${hId} ~ h3[id], ${hId} ~ h4[id], ${hId} ~ h5[id], ${hId} ~ h6[id]`);
+
+        if (keys.length !== headings.length){
+          console.log("Heading/key count mismatch in json_toc");
+          return;
+        }
+
+        for(let i = 0; i < keys.length; i++){
+          const key = keys[i];
+          const label = key.innerText.replaceAll("\"", "");
+          const headingId = headings[i].id;
+
+          key.innerHTML = `"<a href="#${headingId}" class="nt" style="text-decoration: underline;">${label}</a>"`;
+        }
+      }
+
+      link();
+      window.document$.subscribe(link);
+    </script>
+  {% endif %}
+
   {% if page and page.meta and page.meta.openapi_outlet_id %}
     <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js" crossorigin></script>
     <script src="https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-standalone-preset.js" crossorigin></script>

@@ -4,9 +4,19 @@ version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "formatter",
+]
 
 [dependency-groups]
 dev = [
     "zensical>=0.0.24",
 ]
+
+[tool.uv.workspace]
+members = [
+    "packages/formatter",
+]
+
+[tool.uv.sources]
+formatter = { workspace = true, editable = true }

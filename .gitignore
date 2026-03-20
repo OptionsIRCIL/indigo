@@ -2,8 +2,9 @@
 /.idea
 /.vscode
 
-# Python environment
+# Python
 /.venv
+__pycache__
 
 # Generated files
 *.mmd.png
