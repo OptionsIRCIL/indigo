@@ -5,7 +5,6 @@ name: Rolling build
 on:
   push:
   pull_request:
-  workflow_dispatch:
 
 jobs:
   tag:
@@ -51,9 +50,14 @@ jobs:
           name: 'image.tar.gz'
 
   pages:
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/configure-pages@v5
@@ -72,3 +76,21 @@ jobs:
           path: site
       - uses: actions/deploy-pages@v4
         id: deployment
+  
+  publish:
+    needs: build
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+        
+
