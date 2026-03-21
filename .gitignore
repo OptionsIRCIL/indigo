@@ -11,6 +11,7 @@ __pycache__
 *.mmd.svg
 /site/
 /dist/
+/build/
 
 # Compose mounts
 /config/

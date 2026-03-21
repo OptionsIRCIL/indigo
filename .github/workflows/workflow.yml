@@ -43,20 +43,40 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build container
-        uses: docker/build-push-action@v6
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        if: ${{ github.event_name == 'push' }}
         with:
-          context: .
-          target: dist
-          tags: ${{ needs.var.outputs.name }}:${{ needs.var.outputs.tag }}, ${{ needs.var.outputs.name }}:latest
-          platforms: linux/amd64
-          outputs: type=docker,dest=dist/image.tar
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload artifact
+      - name: Build container
+        uses: docker/bake-action@v6
+        with:
+          push: ${{ github.event_name == 'push' }}
+          files: "build.hci"
+          set: |
+            *.IMAGE_TAGS=latest,${{ needs.var.outputs.tag }}
+      
+      - name: Build API spec
+        uses: docker/bake-action@v6
+        with:
+          push: false
+          files: "build.hci"
+          target: "openapi_spec"
+
+      - name: Upload image
         uses: actions/upload-artifact@v4
         with:
-          path: 'dist/image.tar'
+          path: 'build/image.tar'
           name: 'image.tar'
+        
+      - name: Upload API spec
+        uses: actions/upload-artifact@v4
+        with:
+          path: 'build/api.json'
+          name: 'api.json'
 
   pages:
     needs: build
@@ -86,31 +106,3 @@ jobs:
           path: site
       - uses: actions/deploy-pages@v4
         id: deployment
-  
-  publish:
-    needs: [var, build]
-    if: ${{ github.event_name == 'push' }}
-    permissions:
-      contents: read
-      packages: write
-      attestations: write
-      id-token: write
-    runs-on: ubuntu-latest
-    steps:
-      - name: Fetch image
-        uses: actions/download-artifact@v4
-        with:
-          name: image.tar
-
-      - name: Load image
-        run: docker load < image.tar
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      
-      - name: Publish Image
-        run: docker push --all-tags ${{ needs.var.outputs.name }}
