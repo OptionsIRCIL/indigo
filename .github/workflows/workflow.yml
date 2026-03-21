@@ -88,7 +88,7 @@ jobs:
         id: deployment
   
   publish:
-    needs: build
+    needs: [build, var]
     if: ${{ github.event_name == 'push' }}
     permissions:
       contents: read
