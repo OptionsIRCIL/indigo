@@ -15,16 +15,16 @@ jobs:
     name: Generate version tag from workflow SHA and image name from repo name
     runs-on: ubuntu-latest
     outputs:
-      tag: ${{ steps.parse.outputs.tag }}
-      name: ${{ steps.parse.outputs.name }}
+      tag: ${{ steps.parse_sha.outputs.tag }}
+      name: ${{ steps.parse_name.outputs.name }}
     steps:
-      - name: Parse
-        id: parse
-        run: |
-          echo "TAG=main_$(cut -c 1-7 <<< '${{ github.workflow_sha }}')" >> "$GITHUB_OUTPUT"
-          echo "NAME=${OWNER,,}" >> "$GITHUB_OUTPUT"
-        env:
-          OWNER: '${{ env.IMAGE_NAME }}'
+      - name: Parse SHA
+        id: parse_sha
+        run: echo "TAG=main_$(cut -c 1-7 <<< '${{ github.workflow_sha }}')" >> "$GITHUB_OUTPUT"
+      
+      - name: Parse name
+        id: parse_name
+        run: echo "NAME=${IMAGE_NAME,,}" >> "$GITHUB_OUTPUT"
 
   build:
     name: Build container
