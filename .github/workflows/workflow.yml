@@ -48,7 +48,7 @@ jobs:
           outputs: type=docker,dest=dist/image.tar.gz
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v8
+        uses: actions/upload-artifact@v4
         with:
           path: 'dist/image.tar.gz'
           name: 'image.tar.gz'
@@ -93,7 +93,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Fetch image
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@v4
         with:
           name: image.tar.gz
 
