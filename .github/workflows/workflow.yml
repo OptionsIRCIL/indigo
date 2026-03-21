@@ -45,13 +45,13 @@ jobs:
           target: dist
           tags: ${{ env.IMAGE_NAME }}:${{ needs.tag.outputs.tag }}, ${{ env.IMAGE_NAME }}:latest
           platforms: linux/amd64
-          outputs: type=docker,dest=dist/image.tar.gz
+          outputs: type=docker,dest=dist/image.tar
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          path: 'dist/image.tar.gz'
-          name: 'image.tar.gz'
+          path: 'dist/image.tar'
+          name: 'image.tar'
 
   pages:
     needs: build
@@ -95,10 +95,10 @@ jobs:
       - name: Fetch image
         uses: actions/download-artifact@v4
         with:
-          name: image.tar.gz
+          name: image.tar
 
       - name: Load image
-        run: gunzip -c image.tar.gz | docker load
+        run: docker load < image.tar
 
       - name: Log in to the Container registry
         uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
