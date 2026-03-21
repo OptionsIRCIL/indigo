@@ -13,7 +13,7 @@ services:
       test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
 
   indigo:
-    image: OptionsIRCIL/indigo:latest
+    image: ghcr.io/optionsircil/indigo:latest
     restart: unless-stopped
     ports:
       - "443:443"
