@@ -99,7 +99,9 @@ jobs:
         name: Download container artifact
         with:
           name: "api.json"
-          path: "docs/schema/api.json"
+      
+      - name: Overwrite existing API spec
+        run: rm docs/schema/api.json && mv api.json docs/schema/api.json
 
       - name: Install uv
         uses: astral-sh/setup-uv@v7
