@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ghcr.io/${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   tag:
@@ -108,5 +108,5 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Publish Image
-        run: docker push --all-tags ${{ env.IMAGE_NAME }}
+        run: docker push --all-tags ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
