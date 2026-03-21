@@ -26,22 +26,11 @@ jobs:
         env:
           OWNER: '${{ env.IMAGE_NAME }}'
 
-  name:
-    name: Generate image name from repo name
-
-    runs-on: ubuntu-latest
-    outputs:
-      tag: ${{ steps.parse.outputs.tag }}
-    steps:
-      - name: Parse SHA
-        id: parse
-        run: echo "TAG=main_$(cut -c 1-7 <<< '${{ github.workflow_sha }}')" >> "$GITHUB_OUTPUT"
-
   build:
     name: Build container
     runs-on: ubuntu-latest
     needs:
-      - tag
+      - var
     steps:
       - uses: actions/checkout@v4
         with:
@@ -59,7 +48,7 @@ jobs:
         with:
           context: .
           target: dist
-          tags: ${{ env.IMAGE_NAME }}:${{ needs.tag.outputs.tag }}, ${{ env.IMAGE_NAME }}:latest
+          tags: ${{ env.IMAGE_NAME }}:${{ needs.var.outputs.tag }}, ${{ env.IMAGE_NAME }}:latest
           platforms: linux/amd64
           outputs: type=docker,dest=dist/image.tar
 
@@ -124,4 +113,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Publish Image
-        run: docker push --all-tags ${{ env.REGISTRY }}/${{ steps.parse.outputs.name }}
+        run: docker push --all-tags ${{ env.REGISTRY }}/${{ steps.var.outputs.name }}
