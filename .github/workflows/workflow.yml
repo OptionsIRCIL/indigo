@@ -55,7 +55,7 @@ jobs:
         uses: docker/bake-action@v6
         with:
           push: ${{ github.event_name == 'push' }}
-          files: "bake.hci"
+          files: "bake.hcl"
           set: |
             *.IMAGE_TAGS=latest,${{ needs.var.outputs.tag }}
       
@@ -63,7 +63,7 @@ jobs:
         uses: docker/bake-action@v6
         with:
           push: false
-          files: "bake.hci"
+          files: "bake.hcl"
           target: "openapi_spec"
 
       - name: Upload image
