@@ -55,7 +55,7 @@ jobs:
 
   pages:
     needs: build
-    if: github.event_name = "push"
+    if: ${{ github.event_name == 'push' }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -84,7 +84,7 @@ jobs:
   
   publish:
     needs: build
-    if: github.event_name = "push"
+    if: ${{ github.event_name == 'push' }}
     permissions:
       contents: read
       packages: write
