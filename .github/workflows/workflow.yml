@@ -12,19 +12,14 @@ env:
 
 jobs:
   var:
-    name: Generate version tag from workflow SHA and image name from repo name
+    name: Generate version tag from workflow SHA
     runs-on: ubuntu-latest
     outputs:
       tag: ${{ steps.parse_sha.outputs.tag }}
-      name: ${{ steps.parse_name.outputs.name }}
     steps:
       - name: Parse SHA
         id: parse_sha
         run: echo "TAG=main_$(cut -c 1-7 <<< '${{ github.workflow_sha }}')" >> "$GITHUB_OUTPUT"
-      
-      - name: Parse name
-        id: parse_name
-        run: echo "NAME=${IMAGE_NAME,,}" >> "$GITHUB_OUTPUT"
 
   build:
     name: Build container
@@ -88,7 +83,7 @@ jobs:
         id: deployment
   
   publish:
-    needs: [build, var]
+    needs: build
     if: ${{ github.event_name == 'push' }}
     permissions:
       contents: read
@@ -113,4 +108,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Publish Image
-        run: docker push --all-tags ${{ env.REGISTRY }}/${{ steps.var.outputs.name }}
+        run: docker push --all-tags ${{ env.REGISTRY }}/$(echo "${{ env.IMAGE_NAME }}" | tr '[:upper:]' '[:lower:]')
