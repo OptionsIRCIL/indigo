@@ -1,26 +1,25 @@
 # IDE config
-/.idea
-/.vscode
+.idea
+.vscode
 
 # Python environment
-/__pycache__/
-/tests/__pycache__/
-/.venv
+**/__pycache__/
+**/.venv
 
 # Generated files
 *.mmd.png
 *.mmd.svg
-/site/
-/dist/
+site/
+dist/
 
 # Compose mounts
-/config/
-/data/
+config/
+data/
 
 # Secrets
 .env
 .env.*
 
 # Temporary files
-*.swp
-*.kate-swp
+**/*.swp
+**/*.kate-swp
