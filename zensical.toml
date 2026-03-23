@@ -43,11 +43,12 @@ nav = [
   ] }
 ]
 
-extra_css = ["stylesheets/bold.css", "stylesheets/file-tree.css"]
+extra_css = ["stylesheet/style.css"]
 
 [project.theme]
 variant = "classic"
 language = "en"
+custom_dir = "docs/override"
 
 features = [
     # Copy button on code fences
@@ -76,6 +77,9 @@ features = [
 
     # Highlight search results
     "search.highlight",
+
+    # Browse site without full-page reloads when following links
+    "navigation.instant"
 ]
 
 # Palette toggle for automatic mode
@@ -120,7 +124,8 @@ check_paths = true
 # https://zensical.org/docs/authoring/code-blocks/
 [project.markdown_extensions.pymdownx.superfences]
 custom_fences = [
-  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" }
+  { name = "mermaid", class = "mermaid", format = "pymdownx.superfences.fence_code_format" },
+  { name = "dir", class = "dir", format = "formatter.dir.format" }
 ]
 
 # More code block config

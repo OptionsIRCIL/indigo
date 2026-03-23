@@ -1,4 +1,4 @@
-.md-typeset .admonition div.file-tree ul {
+.md-typeset div.file-tree ul {
     font-family: var(--md-code-font-family);
 
     /* Remove padding/margin - we'll control this on our own */
@@ -39,8 +39,8 @@
             border-image: linear-gradient(
                     to bottom, 
                     var(--md-code-fg-color), 
-                    var(--md-code-fg-color) 0.565rem,
-                    transparent 0.565rem,
+                    var(--md-code-fg-color) 0.875em,
+                    transparent 0.875em,
                     transparent
                 ) 1 100%;
             border-left-width: 1px;

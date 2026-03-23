@@ -2,6 +2,12 @@ version = 1
 revision = 3
 requires-python = ">=3.13"
 
+[manifest]
+members = [
+    "docs",
+    "formatter",
+]
+
 [[package]]
 name = "click"
 version = "8.3.1"
@@ -36,6 +42,9 @@ wheels = [
 name = "docs"
 version = "0.1.0"
 source = { virtual = "." }
+dependencies = [
+    { name = "formatter" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -43,9 +52,15 @@ dev = [
 ]
 
 [package.metadata]
+requires-dist = [{ name = "formatter", editable = "packages/formatter" }]
 
 [package.metadata.requires-dev]
 dev = [{ name = "zensical", specifier = ">=0.0.24" }]
+
+[[package]]
+name = "formatter"
+version = "0.1.0"
+source = { editable = "packages/formatter" }
 
 [[package]]
 name = "markdown"

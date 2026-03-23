@@ -1,0 +1,9 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Indigo REST API Stub",
+    "description": "Stub. Generate a spec in pipeline and replace this file for documentation updates.",
+    "version": "0.0.0"
+  },
+  "paths": {}
+}

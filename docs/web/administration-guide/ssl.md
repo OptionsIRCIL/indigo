@@ -31,19 +31,18 @@ provided in the bind mount configured for the `indigo` service in `compose.yml`.
 !!! example "Updated Example File Structure"
       For those using the suggested file structure, you can place these files
       in `./config/`.
-      <div class="file-tree" markdown>
-
-      - 📁 indigo
-         - 📄 compose.yml
-         - 📁 config
-            - ⚙️ config.json
-            - 🔏 fullchain.cer
-            - 🔑 key.pem
-         - 📁 data
-            - 📁 indigo
-            - 📁 mariadb
-
-      </div>
+      
+      ```dir
+      📁 indigo
+      ├─ 🐳 compose.yml
+      ├─ 📁 config
+      │  ├─ ⚙️ config.json
+      │  ├─ 🔏 fullchain.cer
+      │  └─ 🔑 key.pem
+      └─ 📁 data
+         ├─ 📁 indigo
+         └─ 📁 mariadb
+      ```
 
 ## Place Indigo Behind a Reverse Proxy
 
