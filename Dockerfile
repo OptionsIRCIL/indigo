@@ -47,7 +47,9 @@ COPY --from=indigo_compile_frontend /dist/frontend/browser /var/www/browser
 COPY --from=indigo_compile_frontend /dist/frontend/3rdpartylicenses.txt /var/www/browser/3rdpartylicenses_frontend.txt
 
 # Install nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/indigo.d/80-redirect.conf /etc/nginx/indigo.d/80.conf
+COPY nginx/indigo.d/443.conf /etc/nginx/indigo.d/443.conf
 
 # Install entrypoint
 COPY --chmod=0755 entrypoint.sh /entrypoint.sh
@@ -60,3 +62,7 @@ ENTRYPOINT ["/entrypoint.sh"]
 
 FROM scratch AS dist_openapi_spec
 COPY --from=indigo_compile_backend_openapi_spec /api.json /api.json
+
+from dist as dev
+# Allow API over port 80
+COPY nginx/indigo.d/80.conf /etc/nginx/indigo.d/80.conf
