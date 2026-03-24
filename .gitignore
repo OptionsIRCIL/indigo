@@ -3,8 +3,8 @@
 .vscode
 
 # Python environment
-**/__pycache__/
-**/.venv
+__pycache__/
+.venv
 
 # Generated files
 *.mmd.png
@@ -13,13 +13,13 @@ site/
 dist/
 
 # Compose mounts
-config/
-data/
+/config/
+/data/
 
 # Secrets
 .env
 .env.*
 
 # Temporary files
-**/*.swp
-**/*.kate-swp
+*.swp
+*.kate-swp
