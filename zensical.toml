@@ -35,7 +35,9 @@ nav = [
   ] },
   { "Contributing" = [
     { "Coding Conventions" = "contributing/convention.md" },
-    { "Documentation Generation" = "contributing/online-documentation.md" }
+    { "Developer Certificate of Origin" = "contributing/dco-agreement.md" },
+    { "Documentation Generation" = "contributing/online-documentation.md" },
+    { "SPDX Expressions" = "contributing/spdx.md" }
   ] },
   { "About" = [
     { "License" = "about/license.md" },
