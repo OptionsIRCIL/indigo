@@ -14,11 +14,9 @@ Indigo's logo was created using a Canva template, and is licensed to us under th
 
 ## For Developers
 
-We have also adopted the [Developer Certificate of Origin](https://developercertificate.org/) from the Linux Foundation, rather than a Contributor License Agreement.
+We have also adopted the [Developer Certificate of Origin](../contributing/dco-agreement) from the Linux Foundation, rather than a Contributor License Agreement.
 
 As a result, some components may be dual licensed under a more permissive license (MIT, BSD, MPL-2.0, etc.) as well as AGPL-3.0-or-later.
-
-See [Contributing](about/contributing) for more details.
 
 ## Rationale
 
