@@ -1,39 +1,41 @@
 # syntax=docker/dockerfile:1-labs
-FROM --platform=$BUILDPLATFORM alpine:3.23.3 AS indigo_compile_backend
+
+ARG VERSION_GOLANG=1.26.1
+ARG VERSION_NODE=24
+ARG VERSION_ALPINE=3.23
+ARG VERSION_NGINX=3
+ARG VERSION_OPENSSL=1
+
+# Compile OptionsIRCIL/indigo-backend
+FROM --platform=$BUILDPLATFORM golang:${VERSION_GOLANG}-alpine${VERSION_ALPINE} AS indigo_compile_backend
 ARG TARGETOS
 ARG TARGETARCH
-RUN apk add -v go=~1.25
-
-# Install sources
 COPY backend /src/backend
-
-# Build server
-RUN go build \
+RUN <<EOF
+go build \
     -C /src/backend \
     -v \
     -o /dist/server \
     ./cmd/indigo/main.go;
+EOF
 
+# Generated API spec from OptionsIRCIL/indigo-backend
 FROM --platform=$BUILDPLATFORM indigo_compile_backend AS indigo_compile_backend_openapi_spec
 COPY docs/example/config.json /config.json
 RUN /dist/server generate_openapi_spec > /api.json
 
-FROM --platform=$BUILDPLATFORM alpine:3.23.3 AS indigo_compile_frontend
-RUN apk add -v npm
-
-# Install sources
+# Compile OptionsIRCIL/indigo-frontend
+FROM --platform=$BUILDPLATFORM node:${VERSION_NODE}-alpine${VERSION_ALPINE} AS indigo_compile_frontend
 COPY frontend /src/frontend
-
-# Pull client deps
-RUN npm install --verbose --prefix=/src/frontend
-
-# Build client
-RUN npm run ng build indigo-frontend --verbose --prefix=/src/frontend -- \
+RUN <<EOF
+npm install --verbose --prefix=/src/frontend
+npm run ng build indigo-frontend --verbose --prefix=/src/frontend -- \
     --output-path=/dist/frontend \
     --output-mode=static \
     --verbose
+EOF
 
-FROM alpine:3.23.3 AS dist
+FROM alpine:$VERSION_ALPINE AS dist
 RUN apk add -v \
       nginx=~1 \
       openssl=~3 &&\
@@ -53,7 +55,6 @@ COPY nginx/indigo.d/443.conf /etc/nginx/indigo.d/443.conf
 
 # Install entrypoint
 COPY --chmod=0755 entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 
 # Install scripts
 COPY --chmod=0755 bin /usr/bin
