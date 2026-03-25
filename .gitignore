@@ -1,10 +1,10 @@
 # IDE config
-/.idea
-/.vscode
+.idea
+.vscode
 
-# Python
-/.venv
-__pycache__
+# Python environment
+__pycache__/
+.venv
 
 # Generated files
 *.mmd.png
