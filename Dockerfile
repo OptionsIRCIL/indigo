@@ -5,7 +5,9 @@ RUN apk add -v \
       openssl=~3 &&\
     rm -rf /var/cache/apk
 
-FROM indigo_skel AS indigo_compile_backend
+FROM --platform=$BUILDPLATFORM indigo_skel AS indigo_compile_backend
+ARG TARGETOS
+ARG TARGETARCH
 RUN apk add -v go=~1.25
 
 # Install sources
@@ -18,11 +20,11 @@ RUN go build \
     -o /dist/server \
     ./cmd/indigo/main.go;
 
-FROM indigo_compile_backend AS indigo_compile_backend_openapi_spec
+FROM --platform=$BUILDPLATFORM indigo_compile_backend AS indigo_compile_backend_openapi_spec
 COPY docs/example/config.json /config.json
 RUN /dist/server generate_openapi_spec > /api.json
 
-FROM indigo_skel AS indigo_compile_frontend
+FROM --platform=$BUILDPLATFORM indigo_skel AS indigo_compile_frontend
 RUN apk add -v npm
 
 # Install sources
@@ -60,9 +62,9 @@ COPY --chmod=0755 bin /usr/bin
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-FROM scratch AS dist_openapi_spec
+FROM --platform=$BUILDPLATFORM scratch AS dist_openapi_spec
 COPY --from=indigo_compile_backend_openapi_spec /api.json /api.json
 
-from dist as dev
+FROM dist AS dev
 # Allow API over port 80
 COPY nginx/indigo.d/80.conf /etc/nginx/indigo.d/80.conf
