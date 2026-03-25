@@ -34,19 +34,16 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build container
+      - name: Build container and API spec
         uses: docker/bake-action@v6
         with:
           files: "bake.hcl"
-
+          targets: "default,openapi_spec"
+          set: |
+            *.cache-from: type=gha
+            *.cache-to: type=gha,mode=max
         env:
           IMAGE_TAGS: latest,${{ needs.var.outputs.tag }}
-      
-      - name: Build API spec
-        uses: docker/bake-action@v6
-        with:
-          files: "bake.hcl"
-          targets: "openapi_spec"
 
       - name: Upload image
         uses: actions/upload-artifact@v4
@@ -97,6 +94,8 @@ jobs:
           set: |
             default.platform=linux/amd64,linux/arm64,linux/arm/v7
             default.output=type=registry
+            default.cache-from: type=gha
+            default.cache-to: type=gha,mode=max
 
   pages:
     needs: build
