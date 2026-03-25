@@ -1,11 +1,5 @@
 # syntax=docker/dockerfile:1-labs
-FROM alpine:3.23.3 AS indigo_skel
-RUN apk add -v \
-      nginx=~1 \
-      openssl=~3 &&\
-    rm -rf /var/cache/apk
-
-FROM --platform=$BUILDPLATFORM indigo_skel AS indigo_compile_backend
+FROM --platform=$BUILDPLATFORM alpine:3.23.3 AS indigo_compile_backend
 ARG TARGETOS
 ARG TARGETARCH
 RUN apk add -v go=~1.25
@@ -24,7 +18,7 @@ FROM --platform=$BUILDPLATFORM indigo_compile_backend AS indigo_compile_backend_
 COPY docs/example/config.json /config.json
 RUN /dist/server generate_openapi_spec > /api.json
 
-FROM --platform=$BUILDPLATFORM indigo_skel AS indigo_compile_frontend
+FROM --platform=$BUILDPLATFORM alpine:3.23.3 AS indigo_compile_frontend
 RUN apk add -v npm
 
 # Install sources
@@ -39,7 +33,11 @@ RUN npm run ng build indigo-frontend --verbose --prefix=/src/frontend -- \
     --output-mode=static \
     --verbose
 
-FROM indigo_skel AS dist
+FROM alpine:3.23.3 AS dist
+RUN apk add -v \
+      nginx=~1 \
+      openssl=~3 &&\
+    rm -rf /var/cache/apk
 
 # Install server
 COPY --chmod=0755 --from=indigo_compile_backend /dist/server /usr/bin/indigo_backend
