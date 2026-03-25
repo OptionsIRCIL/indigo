@@ -19,10 +19,24 @@ target "default" {
   ]
   platforms = ["local"]
   output = ["type=oci,dest=build/image.tar"]
+  cache_to = [{
+    "mode": "max",
+    "type": "gha"
+  }]
+  cache_from = [{
+    "type": "gha"
+  }]
 }
 
 target "openapi_spec" {
   target = "dist_openapi_spec"
   output = ["build"]
   platforms = ["local"]
+  cache_to = [{
+    "mode": "max",
+    "type": "gha"
+  }]
+  cache_from = [{
+    "type": "gha"
+  }]
 }

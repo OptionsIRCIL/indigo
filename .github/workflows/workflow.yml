@@ -39,9 +39,7 @@ jobs:
         with:
           files: "bake.hcl"
           targets: "default,openapi_spec"
-          set: |
-            *.cache-from: type=gha
-            *.cache-to: type=gha,mode=max
+
         env:
           IMAGE_TAGS: latest,${{ needs.var.outputs.tag }}
 
@@ -94,8 +92,6 @@ jobs:
           set: |
             default.platform=linux/amd64,linux/arm64,linux/arm/v7
             default.output=type=registry
-            default.cache-from: type=gha
-            default.cache-to: type=gha,mode=max
 
   pages:
     needs: build
