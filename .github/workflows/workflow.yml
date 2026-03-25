@@ -97,6 +97,7 @@ jobs:
           files: "bake.hcl"
           set: |
             default.platform=linux/amd64,linux/arm64,linux/arm/v7
+            default.output=type=registry
 
   pages:
     needs: build
