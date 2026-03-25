@@ -17,9 +17,7 @@ target "default" {
     "type=provenance,mode=max",
     "type=sbom",
   ]
-  platforms = [
-    "linux/amd64"
-  ]
+  platforms = ["local"]
   output = ["type=oci,dest=build/image.tar"]
 }
 

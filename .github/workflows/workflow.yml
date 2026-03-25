@@ -32,6 +32,45 @@ jobs:
     needs:
       - var
     steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build container
+        uses: docker/bake-action@v6
+        with:
+          files: "bake.hcl"
+
+        env:
+          IMAGE_TAGS: latest,${{ needs.var.outputs.tag }}
+      
+      - name: Build API spec
+        uses: docker/bake-action@v6
+        with:
+          files: "bake.hcl"
+          targets: "openapi_spec"
+
+      - name: Upload image
+        uses: actions/upload-artifact@v4
+        with:
+          path: 'build/image.tar'
+          name: 'image.tar'
+        
+      - name: Upload API spec
+        uses: actions/upload-artifact@v4
+        with:
+          path: 'build/api.json'
+          name: 'api.json'
+  
+  publish:
+    needs: [build, var]
+    if: ${{ github.event_name == 'push' }}
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
@@ -50,34 +89,14 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
+      
       - name: Build container
         uses: docker/bake-action@v6
         with:
-          push: ${{ github.event_name == 'push' }}
+          push: true
           files: "bake.hcl"
-
-        env:
-          IMAGE_TAGS: latest,${{ needs.var.outputs.tag }}
-      
-      - name: Build API spec
-        uses: docker/bake-action@v6
-        with:
-          push: false
-          files: "bake.hcl"
-          targets: "openapi_spec"
-
-      - name: Upload image
-        uses: actions/upload-artifact@v4
-        with:
-          path: 'build/image.tar'
-          name: 'image.tar'
-        
-      - name: Upload API spec
-        uses: actions/upload-artifact@v4
-        with:
-          path: 'build/api.json'
-          name: 'api.json'
+          set: |
+            default.platform=linux/amd64,linux/arm64,linux/arm/v7
 
   pages:
     needs: build
