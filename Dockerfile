@@ -5,14 +5,11 @@ RUN apk add -v \
       openssl=~3 &&\
     rm -rf /var/cache/apk
 
-FROM indigo_skel AS indigo_compile
-RUN apk add -v \
-    npm \
-    go=~1.25
+FROM indigo_skel AS indigo_compile_backend
+RUN apk add -v go=~1.25
 
 # Install sources
 COPY backend /src/backend
-COPY frontend /src/frontend
 
 # Build server
 RUN go build \
@@ -20,6 +17,16 @@ RUN go build \
     -v \
     -o /dist/server \
     ./cmd/indigo/main.go;
+
+FROM indigo_compile_backend AS indigo_compile_backend_openapi_spec
+COPY docs/example/config.json /config.json
+RUN /dist/server generate_openapi_spec > /api.json
+
+FROM indigo_skel AS indigo_compile_frontend
+RUN apk add -v npm
+
+# Install sources
+COPY frontend /src/frontend
 
 # Pull client deps
 RUN npm install --verbose --prefix=/src/frontend
@@ -33,14 +40,16 @@ RUN npm run ng build indigo-frontend --verbose --prefix=/src/frontend -- \
 FROM indigo_skel AS dist
 
 # Install server
-COPY --chmod=0755 --from=indigo_compile /dist/server /usr/bin/indigo_backend
+COPY --chmod=0755 --from=indigo_compile_backend /dist/server /usr/bin/indigo_backend
 
 # Install client
-COPY --from=indigo_compile /dist/frontend/browser /var/www/browser
-COPY --from=indigo_compile /dist/frontend/3rdpartylicenses.txt /var/www/browser/3rdpartylicenses_frontend.txt
+COPY --from=indigo_compile_frontend /dist/frontend/browser /var/www/browser
+COPY --from=indigo_compile_frontend /dist/frontend/3rdpartylicenses.txt /var/www/browser/3rdpartylicenses_frontend.txt
 
 # Install nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/indigo.d/80-redirect.conf /etc/nginx/indigo.d/80.conf
+COPY nginx/indigo.d/443.conf /etc/nginx/indigo.d/443.conf
 
 # Install entrypoint
 COPY --chmod=0755 entrypoint.sh /entrypoint.sh
@@ -50,3 +59,10 @@ RUN chmod +x /entrypoint.sh
 COPY --chmod=0755 bin /usr/bin
 
 ENTRYPOINT ["/entrypoint.sh"]
+
+FROM scratch AS dist_openapi_spec
+COPY --from=indigo_compile_backend_openapi_spec /api.json /api.json
+
+from dist as dev
+# Allow API over port 80
+COPY nginx/indigo.d/80.conf /etc/nginx/indigo.d/80.conf

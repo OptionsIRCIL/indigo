@@ -9,8 +9,9 @@ __pycache__/
 # Generated files
 *.mmd.png
 *.mmd.svg
-site/
-dist/
+/site/
+/dist/
+/build/
 
 # Compose mounts
 /config/

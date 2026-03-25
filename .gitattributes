@@ -1,0 +1,3 @@
+# Force linefeed newlines
+* text eol=lf
+* .sh eol=lf
