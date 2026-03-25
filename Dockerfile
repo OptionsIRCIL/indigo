@@ -22,6 +22,7 @@ EOF
 # Generated API spec from OptionsIRCIL/indigo-backend
 FROM --platform=$BUILDPLATFORM indigo_compile_backend AS indigo_compile_backend_openapi_spec
 COPY docs/example/config.json /config.json
+WORKDIR /
 RUN /dist/server generate_openapi_spec > /api.json
 
 # Compile OptionsIRCIL/indigo-frontend
