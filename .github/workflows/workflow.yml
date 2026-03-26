@@ -44,7 +44,7 @@ jobs:
           key: cache-mount-${{ hashFiles('Dockerfile') }}
 
       - name: Restore Docker cache mounts
-        uses: reproducible-containers/buildkit-cache-dance@v3
+        uses: reproducible-containers/buildkit-cache-dance@4b2444fec0c0fb9dbf175a96c094720a692ef810
         with:
           builder: ${{ steps.setup-buildx.outputs.name }}
           cache-dir: cache-mount
@@ -105,7 +105,7 @@ jobs:
           key: cache-mount-${{ hashFiles('Dockerfile') }}
 
       - name: Restore Docker cache mounts
-        uses: reproducible-containers/buildkit-cache-dance@v3
+        uses: reproducible-containers/buildkit-cache-dance@4b2444fec0c0fb9dbf175a96c094720a692ef810
         with:
           builder: ${{ steps.setup-buildx.outputs.name }}
           cache-dir: cache-mount
