@@ -28,7 +28,10 @@ RUN /dist/server generate_openapi_spec > /api.json
 # Compile OptionsIRCIL/indigo-frontend
 FROM --platform=$BUILDPLATFORM node:${VERSION_NODE}-alpine${VERSION_ALPINE} AS indigo_compile_frontend
 COPY frontend /src/frontend
-RUN --mount=type=cache,target=/src/frontend/node_modules <<EOF
+RUN --mount=type=cache,target=/dist/frontend <<EOF
+if [ -f /dist/frontend/3rdpartylicenses.txt ]; then
+  return 0;
+fi
 npm install --verbose --prefix=/src/frontend
 npm run ng build indigo-frontend --verbose --prefix=/src/frontend -- \
     --output-path=/dist/frontend \
