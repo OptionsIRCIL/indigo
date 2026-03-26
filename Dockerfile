@@ -40,6 +40,7 @@ else
         --output-mode=static \
         --verbose
     cp -r /dist/frontend/* /dist-cache/
+    ls -lah /dist-cache
 fi
 EOF
 
