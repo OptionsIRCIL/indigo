@@ -31,7 +31,7 @@ COPY frontend /src/frontend
 RUN --mount=type=cache,target=/dist-cache <<EOF
 if [ -f /dist-cache/3rdpartylicenses.txt ]; then
   mkdir -p /dist/frontend
-  cp /dist-cache/* /dist/frontend/
+  cp -r /dist-cache/* /dist/frontend/
   exit 0
 fi
 npm install --verbose --prefix=/src/frontend
@@ -39,7 +39,7 @@ npm run ng build indigo-frontend --verbose --prefix=/src/frontend -- \
     --output-path=/dist/frontend \
     --output-mode=static \
     --verbose
-cp /dist/frontend/* /dist-cache/
+cp -r /dist/frontend/* /dist-cache/
 EOF
 
 FROM alpine:$VERSION_ALPINE AS dist
