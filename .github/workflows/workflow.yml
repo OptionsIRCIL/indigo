@@ -36,17 +36,20 @@ jobs:
         uses: docker/setup-buildx-action@v4
         id: setup-buildx
 
-      - name: Cache
+      - name: Configure Actions cache
         uses: actions/cache@v5
         id: cache
         with:
           path: cache-mount
           key: cache-mount-${{ github.sha }}
 
-      - name: Restore Docker cache mounts
-        uses: reproducible-containers/buildkit-cache-dance@4b2444fec0c0fb9dbf175a96c094720a692ef810
+      - name: Configure Docker cache
+        uses: reproducible-containers/buildkit-cache-dance@v3
         with:
-          cache-source: cache-mount
+          builder: ${{ steps.setup-buildx.outputs.name }}
+          cache-dir: cache-mount
+          dockerfile: Dockerfile
+          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
 
       - name: Build container and API spec
         uses: docker/bake-action@v7
@@ -94,17 +97,20 @@ jobs:
         uses: docker/setup-buildx-action@v4
         id: setup-buildx
 
-      - name: Cache
+      - name: Configure Actions cache
         uses: actions/cache@v5
         id: cache
         with:
           path: cache-mount
           key: cache-mount-${{ github.sha }}
 
-      - name: Restore Docker cache mounts
-        uses: reproducible-containers/buildkit-cache-dance@4b2444fec0c0fb9dbf175a96c094720a692ef810
+      - name: Configure Docker cache
+        uses: reproducible-containers/buildkit-cache-dance@v3
         with:
-          cache-source: cache-mount
+          builder: ${{ steps.setup-buildx.outputs.name }}
+          cache-dir: cache-mount
+          dockerfile: Dockerfile
+          skip-extraction: ${{ steps.cache.outputs.cache-hit }}
       
       - name: Build container
         uses: docker/bake-action@v7
