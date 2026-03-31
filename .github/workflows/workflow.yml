@@ -14,7 +14,7 @@ env:
 jobs:
   pytest:
     name: Selenium Tests
-    runs-on: ubuntu-24.04
+    runs-on: selenium/standalone-chrome
     steps:
       - uses: actions/checkout@v6
       - name:
