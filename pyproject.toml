@@ -16,6 +16,8 @@ dev = [
 [tool.uv.workspace]
 members = [
     "packages/formatter",
+    "packages/tests/tests",
+    "packages/tests",
 ]
 
 [tool.uv.sources]

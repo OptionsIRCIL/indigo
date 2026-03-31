@@ -10,7 +10,7 @@ driverOptionsChrome.add_argument("--enable-logging")
 driverOptionsChrome.add_argument("--ignore-ssl-errors=yes") # TODO: Toggle off when INDIGO_ENV="prod"
 driverOptionsChrome.add_argument("--ignore-certificate-errors") # TODO: Toggle off when INDIGO_ENV="prod"
 driverOptionsChrome.set_capability("goog:loggingPrefs", {"performance": "ALL"})
-driverOptionsChrome.add_experimental_option("detach", True)
+# driverOptionsChrome.add_experimental_option("detach", True)
 
 def getPeformanceLogs(driver: webdriver.chrome.webdriver.WebDriver):
     log = driver.get_log("performance")

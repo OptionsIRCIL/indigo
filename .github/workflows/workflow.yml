@@ -12,8 +12,8 @@ env:
   UV: 0.11.2
 
 jobs:
-  tests:
-    name: python
+  pytest:
+    name: Selenium Tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -26,11 +26,10 @@ jobs:
         uses: astral-sh/setup-uv@v7
         with:
           version: ${{ env.UV }}
-      - name: Create venv
-        run: uv venv
-      - name: Install pytest
-        run: uv pip install selenium
-      - run: uv run ./packages/tests/testLogin.py
+      - name: Install the project
+        run: uv --directory ./packages/tests sync --locked --all-extras --dev
+      - name: Run tests
+        run: uv --directory ./packages/tests run pytest ./src/tests/testLogin.py
 
   var:
     name: Generate variables
