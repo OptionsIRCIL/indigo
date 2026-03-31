@@ -22,6 +22,11 @@ jobs:
         with:
           python-version: ${{ env.PYTHON }}
           check-latest: true
+      - name: Install dependencies (apt)
+        run: |
+          apt update
+          apt install -y chromium-chromedriver
+          apt install -y libglib2.0-0t64 libnss3 libfontconfig1
       - name: Install uv
         uses: astral-sh/setup-uv@v7
         with:
