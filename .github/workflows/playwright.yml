@@ -14,6 +14,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Install Docker
+      run: apk add docker docker-compose
+
     - name: Build and serve Indigo
       run: docker compose up -d --force-recreate --build
 
