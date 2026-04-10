@@ -10,6 +10,7 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    container: ghcr.io/optionsircil/indigo:latest
     steps:
     - uses: actions/checkout@v4
 
