@@ -13,6 +13,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - name: Build and serve Indigo
+      run: docker compose up -d --force-recreate --build
+
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
