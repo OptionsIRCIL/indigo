@@ -46,6 +46,8 @@ fi
 EOF
 
 FROM nginx:${VERSION_NGINX}-alpine${VERSION_ALPINE} AS dist
+RUN apk update && apk add openssl
+
 # Install server
 COPY --chmod=0755 --from=indigo_compile_backend /dist/server /usr/bin/indigo_backend
 
