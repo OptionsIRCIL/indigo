@@ -43,6 +43,8 @@ else
     echo "Caching..."
     cp -r /dist/frontend/* /dist-cache/
 fi
+mkdir -p /dist/frontend/config
+cp /src/frontend/public/config/config.json /dist/frontend/config/config.json
 EOF
 
 FROM nginx:${VERSION_NGINX}-alpine${VERSION_ALPINE} AS dist
@@ -54,6 +56,7 @@ COPY --chmod=0755 --from=indigo_compile_backend /dist/server /usr/bin/indigo_bac
 # Install client
 COPY --from=indigo_compile_frontend /dist/frontend/browser /var/www/browser
 COPY --from=indigo_compile_frontend /dist/frontend/3rdpartylicenses.txt /var/www/browser/3rdpartylicenses_frontend.txt
+COPY --from=indigo_compile_frontend /dist/frontend/config/config.json /var/www/browser/config/config.json
 
 # Install nginx config
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
