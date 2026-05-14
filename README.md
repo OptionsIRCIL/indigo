@@ -42,6 +42,13 @@ cat > ./config/config.json <<EOF
 }
 EOF
 
+cat > ./config/config-frontend.json <<EOF
+{
+  "apiUrl": "/api/v1/",
+  "production": false
+}
+EOF
+
 # Build and serve
 docker compose up -d --force-recreate --build
 ```

@@ -54,6 +54,7 @@ COPY --chmod=0755 --from=indigo_compile_backend /dist/server /usr/bin/indigo_bac
 # Install client
 COPY --from=indigo_compile_frontend /dist/frontend/browser /var/www/browser
 COPY --from=indigo_compile_frontend /dist/frontend/3rdpartylicenses.txt /var/www/browser/3rdpartylicenses_frontend.txt
+COPY config/config-frontend.json /var/www/browser/config.json
 
 # Install nginx config
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
