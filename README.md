@@ -72,3 +72,13 @@ docker compose exec -it indigo idg-create-user \
     -first "John" \
     -last "Doe"
 ```
+
+### Playwright Tests
+
+Once Indigo is running, you can run tests using Playwright.
+Note that Playwright only supports Ubuntu.
+
+```shell
+npx playwright test
+npx playwright show-report
+```
