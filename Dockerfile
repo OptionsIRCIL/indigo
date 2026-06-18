@@ -28,21 +28,15 @@ RUN /dist/server generate_openapi_spec > /api.json
 FROM --platform=$BUILDPLATFORM node:${VERSION_NODE}-alpine${VERSION_ALPINE} AS indigo_compile_frontend
 COPY frontend /src/frontend
 RUN --mount=type=cache,target=/dist-cache <<EOF
-if [ -f /dist-cache/3rdpartylicenses.txt ]; then
-    echo "Cache hit, skipping build"
-    mkdir -p /dist/frontend
-    cp -r /dist-cache/* /dist/frontend/
-else
-    echo "Cache miss, building..."
-    npm install --verbose --prefix=/src/frontend
-    npm run ng build indigo-frontend --verbose --prefix=/src/frontend -- \
-        --output-path=/dist/frontend \
-        --output-mode=static \
-        --verbose
+echo "Cache miss, building..."
+npm install --verbose --prefix=/src/frontend
+npm run ng build indigo-frontend --verbose --prefix=/src/frontend -- \
+    --output-path=/dist/frontend \
+    --output-mode=static \
+    --verbose
 
-    echo "Caching..."
-    cp -r /dist/frontend/* /dist-cache/
-fi
+echo "Caching..."
+cp -r /dist/frontend/* /dist-cache/
 EOF
 
 FROM nginx:${VERSION_NGINX}-alpine${VERSION_ALPINE} AS dist
