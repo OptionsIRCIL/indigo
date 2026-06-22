@@ -72,3 +72,7 @@ docker compose exec -it indigo idg-create-user \
     -first "John" \
     -last "Doe"
 ```
+
+## Documentation
+
+Documentation is available at [optionsircil.github.io/indigo](https://optionsircil.github.io/indigo/#abstract)
